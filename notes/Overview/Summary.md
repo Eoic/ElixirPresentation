@@ -1,0 +1,2 @@
+1. Erlang is for developing highly available systems with little to no downtime. Battle tested on large systems for over three decades.
+2. Elixir is modern language that makes working on the Erlang platform easier - abstracts away boilerplate, duplication, simplifies library APIs, is easily extensible. 

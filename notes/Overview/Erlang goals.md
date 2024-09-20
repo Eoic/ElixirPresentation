@@ -1,0 +1,1 @@
+Maintaining scalable, high availability, fault-tolerant systems. There systems were telecom switches, but were adapted to web systems later on (e.g. collaboration tools, database servers, online payment systems, multiplayer games). Users: Cisco, Erricson, Klarna, T-Mobile, WhatsApp, Amazon, etc.
