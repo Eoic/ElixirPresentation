@@ -1,17 +1,29 @@
+defimpl String.Chars, for: TodoList do
+  def to_string(_) do
+    "#TodoList"
+  end
+end
+
+defimpl Collectable, for: TodoList do
+  def into(original) do
+    {original, &into_callback/2}
+  end
+
+  defp into_callback(todo_list, {:cont, entry}) do
+    TodoList.add_entry(todo_list, entry)
+  end
+
+  defp into_callback(todo_list, :done), do: todo_list
+
+  defp into_callback(_, :halt), do: :ok
+end
+
 defmodule TodoList do
   defstruct next_id: 1, entries: %{}
 
   def new(), do: %TodoList{}
 
-  def new(entries) do
-    Enum.reduce(
-      entries,
-      %TodoList{},
-      fn entry, todo_list_acc ->
-        add_entry(todo_list_acc, entry)
-      end
-    )
-  end
+  def new(entries), do: Enum.into(entries, new())
 
   def add_entry(todo_list, entry) do
     entry = Map.put(entry, :id, todo_list.next_id)

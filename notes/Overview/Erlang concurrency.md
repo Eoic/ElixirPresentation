@@ -3,5 +3,5 @@ It does not rely on heavyweight threads on OS processes. The concurrency primiti
 BEAM - Bogdan/Björn’s Erlang Abstract Machine
 
 ![[Pasted image 20240920124558.png]]
-
+![[Pasted image 20240921232917.png]]
 Garbage collection is per-process.
