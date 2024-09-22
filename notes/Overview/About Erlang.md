@@ -12,8 +12,7 @@ must be responsive, regardless of the number of connected clients. The effects o
 unexpected errors must be minimal, instead of affecting the entire system. It’s accept-
 able if an occasional request fails due to a bug, but it’s a major problem if the entire
 system to becomes completely unavailable. Ideally, the system should never crash or
-be taken down, not even during a software upgrade. It should always be up and run-
-ning, providing service to its clients.
+be taken down, not even during a software upgrade. It should always be up and running, providing service to its clients.
 
 Powers RabbitMQ, Discord, WhatsApp.
 

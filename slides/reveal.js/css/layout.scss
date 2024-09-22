@@ -68,3 +68,32 @@
 .reveal .justify-start { justify-content: flex-start; }
 .reveal .justify-center { justify-content: center; }
 .reveal .justify-end { justify-content: flex-end; }
+
+// Custom.
+// https://www.hover.dev/css-color-palette-generator
+$c-primary: #37176f;
+$c-primary-content: #b89bea;
+$c-primary-light: #4c2099;
+$c-primary-dark: #220e45;
+
+.reveal .slides > section {
+	padding: 1rem;
+	text-align:left;
+
+	h2 {
+		color: $c-primary-content;
+	}
+
+	pre {
+		font-size: 0.49em;
+		margin-inline: 0;
+	}
+
+	code {
+		border-radius: 6px;
+	}
+}
+
+.slide-background-content {
+	filter: drop-shadow(5px 5px 30px #000) brightness(85%);
+}

@@ -8,17 +8,121 @@
 
 		<link rel="stylesheet" href="dist/reset.css">
 		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/black.css">
-		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+		<link rel="stylesheet" href="dist/theme/night.css">
+		<link rel="stylesheet" href="plugin/highlight/an-old-hope.css">
 		<link rel="icon" type="image/x-icon" href="/images/favicon.ico">
 	</head>
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Horizontal Slide</section>
+				<section
+					data-background-color="#220e45"
+					data-background-image="/images/elixir.png"
+					data-background-size="30% auto"
+					data-background-position="85% 50%"
+					data-background-opacity="0.25"
+				>
+					<h2> The Elixir Programming Language </h2>
+				</section>
+
 				<section>
-					<section>Vertical Slide 1</section>
-					<section>Vertical Slide 2</section>
+					<section>
+						<h2> Erlang </h2>
+						<ul>
+							<li> A development platform for building scalable systems.</li>
+							<li> Created at Ericsson in 1980s.</li>
+							<li> Developed for handling telephone switches with millions of concurrent connections. </li>
+							<li> Banned by Ericsson for internal use in 1998 (open sourced the same year). </li>
+						</ul>
+					</section>
+
+					<section>
+						<h2> Erlang goals </h2>
+						<ul>
+							<li> Distribution. </li>
+							<li> Fault tolerance. </li>
+							<li> High availability. </li>
+							<li> Responsiveness. </li>
+							<li> Live updates. </li>
+						</ul>
+					</section>
+
+					<section>
+						<h2> Erlang concurrency </h2>
+						<img style="width: 100%; height: auto;" src="./images/beam.svg">
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2> Elixir </h2>
+						<ul>
+							<li> Created as a R&D project at Platformatec (closed) by José Valim. </li>
+							<li> First release in 2012. </li>
+							<li> An alternative language for the Erlang virtual machine. </li>
+							<li> Makes Erlang platform more approachable. </li>
+							<li> Simplifies syntax, reduces boilerplate and duplication. </li>
+							<li> Compiles into BEAM-compliant bytecode </li>
+							<li> No performance penalty. </li>
+							<li> Extensible through macros. </li>
+						</ul>
+					</section>
+
+					<section class="r-fit-text">
+						<h2> Server process in Erlang </h2>
+
+						<pre data-id="code" class="stretch">
+							<code data-line-numbers class="hljs stretch" data-trim>
+								-module(sum_server).
+								-behaviour(gen_server).
+
+								-export([
+									start/0,
+									sum/3,
+									init/1,
+									handle_call/3,
+									handle_cast/2,
+									handle_info/2,
+									terminate/2,
+									code_change/3
+								]).
+
+								start() -> gen_server:start(?MODULE, [], []).
+								sum(Server, A, B) -> gen_server:call(Server, {sum, A, B}).
+
+								init(_) -> {ok, undefined}.
+								handle_call({sum, A, B}, _From, State) -> {reply, A + B, State}.
+								handle_cast(_Msg, State) -> {noreply, State}.
+								handle_info(_Info, State) -> {noreply, State}.
+								terminate(_Reason, _State) -> ok.
+								code_change(_OldVsn, State, _Extra) -> {ok, State}.
+							</code>
+						</pre>
+					</section>
+
+					<section class="r-fit-text">
+						<h2> Server process in Elixir </h2>
+
+						<pre data-id="code">
+							<code data-line-numbers class="hljs" data-trim>
+								defmodule SumServer do
+									use GenServer
+
+									def start do
+										GenServer.start(__MODULE__, nil)
+									end
+
+									def sum(server, a, b) do
+										GenServer.call(server, {:sum, a, b})
+									end
+
+									def handle_call({:sum, a, b}, _from, state) do
+										{:reply, a + b, state}
+									end
+								end
+							</code>
+						</pre>
+					</section>
 				</section>
 			</div>
 		</div>
@@ -30,6 +134,7 @@
 		<script>
 			Reveal.initialize({
 				hash: true,
+				center: false,
 				slideNumber: true,
 				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
 			});

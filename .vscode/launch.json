@@ -1,0 +1,17 @@
+{
+    "configurations": [
+        {
+            "type": "mix_task",
+            "request": "launch",
+            "name": "mix test",
+            "task": "test",
+            "startApps": true,
+            "taskArgs": ["--trace"],
+            "projectDir": "${workspaceRoot}/examples/mix_projects/todo_cache",
+            "requireFiles": [
+                "test/**/test_helper.exs",
+                "test/**/*_test.exs"
+            ]
+        }
+    ]
+}
