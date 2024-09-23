@@ -1,1 +1,0 @@
-- [ ] https://thechipletter.substack.com/p/ericsson-to-whatsapp-the-story-of

@@ -11,4 +11,4 @@ fun = &Geometry.area/1
 fun.({:circle, 4})
 fun.({:square, 5})
 fun.({:rectangle, 4, 5})
-```
+```F

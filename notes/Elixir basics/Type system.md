@@ -71,7 +71,7 @@ def complex_transformation(data) do
 	data
 	|> transformation_1(...)
 	|> transformation_2(...)
-	...
+	|> transformation_3(...)
 	|> transformation_n(...)
 end
 ```

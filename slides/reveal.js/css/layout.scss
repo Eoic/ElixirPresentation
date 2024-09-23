@@ -80,17 +80,28 @@ $c-primary-dark: #220e45;
 	padding: 1rem;
 	text-align:left;
 
-	h2 {
+	h1, h2, h3 {
 		color: $c-primary-content;
 	}
 
 	pre {
 		font-size: 0.49em;
 		margin-inline: 0;
+
+		&.dimmed {
+			opacity: 0.5;
+			pointer-events: none;
+		}
 	}
 
 	code {
 		border-radius: 6px;
+	}
+
+	ul {
+		li {
+			margin-bottom: 0.35em;
+		}
 	}
 }
 

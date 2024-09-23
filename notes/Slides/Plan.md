@@ -9,7 +9,7 @@
 10. **Type system** - dynamic type system, list supported types, mention that integer size in Erlang is unlimited, but has two types (small and large), static analysis and type annotations through documentation comments.
 11. **Modules and functions** - how code is organized into modules and functions, and how modules are used for higher order abstractions. 
 12. **Control flow**
-	1. Pattern matching and guards - the importance of pattern matching and some simple examples, explain that equals (`=`) is not an assignment symbol.
+	1. **Pattern matching and guards **- the importance of pattern matching and some simple examples, explain that equals (`=`) is not an assignment symbol.
 	2. **Multi-clause functions** - pattern matching by declaring the same function with different patterns, few simple code examples.
 	3. **Recursion and looping** - explain tail-call optimization and how if affects performance, show how looping is done with recursion with and without tail-call optimization, show how higher-order functions can be used to implement looping easier, without custom code (e.g. `Enum.map`). 
 13. **Concurrency** - lightweight processes and how they simplify building concurrent, scalable systems, scaling across multi-core systems and why it is relevant (CPU clock frequencies hardly growing, growing focus on the number of cores).
@@ -18,7 +18,7 @@
 	3. **Fault tolerance** - "let it crash" philosophy, supervision trees, how to handle failure. Add a real-world system example.
 	4. **Supervisors** - what are they used for.
 	5. **Supervision trees** - how and why.
-14. **Ecosystem** - Mix, Hex, and other tooling.
+14. ~~**Ecosystem** - Mix, Hex, and other tooling.~~
 15. **Case studies** - who is using Elixir and Erlang right now and for what purpose (e.g. Discord, RabbitMQ, Pinterest, Heroku, V7, WhatsApp).
 16. **Tooling**
 	1. **Phoenix Framework** - web framework, mention LiveView and mention system using this technology.

@@ -15,6 +15,7 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
+				<!-- Title. -->
 				<section
 					data-background-color="#220e45"
 					data-background-image="/images/elixir.png"
@@ -25,104 +26,391 @@
 					<h2> The Elixir Programming Language </h2>
 				</section>
 
+				<!-- Erlang history. -->
 				<section>
-					<section>
-						<h2> Erlang </h2>
-						<ul>
-							<li> A development platform for building scalable systems.</li>
-							<li> Created at Ericsson in 1980s.</li>
-							<li> Developed for handling telephone switches with millions of concurrent connections. </li>
-							<li> Banned by Ericsson for internal use in 1998 (open sourced the same year). </li>
-						</ul>
-					</section>
+					<h2> The history of Erlang </h2>
+					<ul>
+						<li> Created at Ericsson in 1980s.</li>
+						<li> Developed for handling telephone switches with millions of concurrent connections. </li>
+						<li> Banned by Ericsson for internal use in 1998 (open sourced the same year). </li>
+						<li> Adopted outside telecoms - messaging systems, databases, IoT, fintech </li>
+					</ul>
+				</section>
 
-					<section>
-						<h2> Erlang goals </h2>
-						<ul>
-							<li> Distribution. </li>
-							<li> Fault tolerance. </li>
-							<li> High availability. </li>
-							<li> Responsiveness. </li>
-							<li> Live updates. </li>
-						</ul>
-					</section>
+				<!-- Design goals (Erlang) -->
+				<section>
+					<h2> Erlang's design goals </h2>
+					<ul>
+						<li> <b>Concurrency</b> - run many processes in parallel. </li>
+						<li> <b>Fault tolerance</b> - prevent error from affecting the entire system. </li>
+						<li> <b>High availability</b> - minimize downtime. </li>
+						<li> <b>Responsiveness</b> - handle requests quickly. </li>
+						<li> <b>Distribution</b>  - scale across hardware. </li>
+						<li> <b>Live updates</b> - update code on-the-fly. </li>
+					</ul>
+				</section>
 
-					<section>
-						<h2> Erlang concurrency </h2>
-						<img style="width: 100%; height: auto;" src="./images/beam.svg">
-					</section>
+				<!-- Notable Erlang projects. -->
+				<section>
+					<h2> Notable projects </h2>
+					<ul>
+						<li> <b>Ejabberd</b> - real-time messaging platform. </li>
+						<li> <b>CouchDB</b> - NoSQL database. </li>
+						<li> <b>RabbitMQ</b> - AMQP messaging broker. </li>
+						<li> <b>Facebook Chat</b> - later rewritten in C++. </li>
+						<li> <b>WhatsApp</b> - instant messaging and VoIP service. </li>
+						<li> <b>Riak</b> - distributed key-value store. </li>
+					</ul>
+				</section>
+
+				<!-- BEAM concurrency 1. -->
+				<section>
+					<h3> Concurrency model (1/2) </h3>
+					<img style="width: 100%; height: auto;" src="./images/beam.svg">
+				</section>
+
+				<!-- BEAM concurrency 2. -->
+				<section>
+					<h3> Concurrency model (2/2) </h3>
+					<ul>
+						<li> The unit of concurrency is an Erlang process. </li>
+						<li> Processes are <b>lightweight</b> - few μs to create, under a few KB in size. </li>
+						<li> Schedulers allocate time-slots for each process, usually under 1 ms. </li>
+						<li> Processes are isolated, <b>share no memory</b> and communicate through <b>asynchronous messages</b>. </li>
+						<li> In theory, single BEAM instance can handle up to <b>134 million</b> concurrent processes. </li>
+					</ul>
+				</section>
+				
+				<!-- Elixir history. -->
+				<section>
+					<h2> The history of Elixir </h2>
+					<ul>
+						<li> Created as a R&D project at Platformatec by José Valim. </li>
+						<li> Intended to make Erlang platform more approachable, enhance productivity, allow for higher extensibility. </li>
+						<li> Aimed for developing large-scale, fault-tolerant sites and systems. </li>
+						<li> First release in 2012. </li>
+					</ul>
+				</section>
+
+				<!-- Elixir features. -->
+				<section>
+					<h2> Elixir features </h2>
+					<ul>
+						<li> Polymorphism for deciding behavior at runtime. </li>
+						<li> Metaprogramming support through macros. </li>
+						<li> Compiles into BEAM-compliant bytecode. </li>
+						<li> Can communicate with Erlang code. </li>
+						<li> No runtime penalty - everything is done at compile-time. </li>
+						<li> Simplifies syntax and library APIs, reduces Erlang's boilerplate code. </li>
+					</ul>
+				</section>
+
+				<!-- Server process - Erlang. -->
+				<section class="r-fit-text">
+					<h3> Server process in Erlang </h3>
+
+					<pre class="stretch">
+						<code data-line-numbers class="hljs stretch" data-trim>
+							-module(sum_server).
+							-behaviour(gen_server).
+
+							-export([
+								start/0,
+								sum/3,
+								init/1,
+								handle_call/3,
+								handle_cast/2,
+								handle_info/2,
+								terminate/2,
+								code_change/3
+							]).
+
+							start() -> gen_server:start(?MODULE, [], []).
+							sum(Server, A, B) -> gen_server:call(Server, {sum, A, B}).
+
+							init(_) -> {ok, undefined}.
+							handle_call({sum, A, B}, _From, State) -> {reply, A + B, State}.
+							handle_cast(_Msg, State) -> {noreply, State}.
+							handle_info(_Info, State) -> {noreply, State}.
+							terminate(_Reason, _State) -> ok.
+							code_change(_OldVsn, State, _Extra) -> {ok, State}.
+						</code>
+					</pre>
+				</section>
+
+				<!-- Server process - Elixir. -->
+				<section class="r-fit-text">
+					<h3> Server process in Elixir </h3>
+
+					<pre data-id="code">
+						<code data-line-numbers class="hljs" data-trim>
+							defmodule SumServer do
+								use GenServer
+
+								def start do
+									GenServer.start(__MODULE__, nil)
+								end
+
+								def sum(server, a, b) do
+									GenServer.call(server, {:sum, a, b})
+								end
+
+								@impl GenServer
+								def handle_call({:sum, a, b}, _from, state) do
+									{:reply, a + b, state}
+								end
+							end
+						</code>
+					</pre>
+				</section>
+
+				<!-- Disadvantages of Erlang / Elixir. -->
+				<section>
+					<h2> Disadvantages </h2>
+					<ul>
+						<li> Not suitable for heavy CPU-bound work, but good for I/O. </li>
+						<li> Cannot achieve the speed of machine compiled languages (e.g, C/C++), but can keep performance consistent. </li>
+						<li> Relatively small ecosystem compared to JavaScript, Ruby, etc. </li>
+					</ul>
+				</section>
+
+				<!-- Type system 1. -->
+				<section>
+					<h2> Type system (1/2) </h2>
+				</section>
+
+				<!-- Type system 2. -->
+				<section>
+					<h2> Type system (2/2) </h2>
+				</section>
+
+				 <!-- Pipe operator. -->
+				<section>
+					<h2> Pipe operator |> </h2>
+					<p> Passes the result of the previous function as a first argument of the next function.  </p>
+					<pre>
+				</section>
+
+				<!-- Immutability -->
+				<section>
+					<h2> Immutability </h2>
+					<ul>
+						<li>Side-effect free data transformations.</li>
+						<li>Memory is still <b>shared</b> as mush as possible. </li>
+						<li>Easier to analyze, understand and test. </li>
+						<li>No variable is <b>implicitly changed</b>. </li>
+					</ul>
+					<pre>
+						<code data-line-numbers class="hljs language-elixir" data-trim>
+							def complex_transformation(data) do
+								data
+								|> transformation_1()
+								|> transformation_2()
+								|> transformation_3()
+								|> transformation_n()
+							end
+						</code>
+					</pre>
+				</section>
+
+				<!-- Modifying tuples. -->
+				<section>
+					<h2> Modifying data (1/2)</h2>
+					<pre>
+						<code data-line-numbers class="hljs language-elixir" data-trim>
+							tuple_one = {a, b, c}
+							tuple_two = put_elem(tuple_one, 2, d)
+						</code>
+					</pre>
+					<img class="r-stretch" src="./images/tuple_copy.svg" style="margin: 0 auto; display: inherit;">
+				</section>
+
+				<!-- Modifying lists. -->
+				<section>
+					<h2> Modifying data (2/2)</h2>
+					<pre>
+						<code data-line-numbers class="hljs language-elixir" data-trim>
+							list_one = [a, b, c, d, e]
+							list_two = List.replace_at(list_one, 2, c2)
+						</code>
+					</pre>
+					<img class="r-stretch" src="./images/list_copy.svg" style="margin: 0 auto; display: inherit;">
+				</section>
+
+				<!-- Pattern matching. -->
+				<section>
+					<h2> Pattern matching </h2>
+					<pre>
+						<code data-line-numbers="1-15|1|2|3|5|6|8|9|10|12|14|15" class="hljs language-elixir" data-trim>
+							1 = 1
+							a = 100
+							100 = a
+
+							{name, age} = {"Bob", 27}
+							{:person, name, age} = {:person, "Bob", 27}
+
+							{{year, month, day}, time} = :calendar.local_time()
+							{_, time} = :calendar.local_time()
+							{_, {hour, _, _}} = :calendar.local_time()
+
+							{a, a, a} = {127, 127, 1}
+
+							expected_name = "Bob"
+							{^expected_name, _} = {"Bob", 25}
+						</code>
+					</pre>
+				</section>
+
+				 <section>
+					<h2> Multiclause functions</h2>
+					<pre>
+						<code data-line-numbers="1-14|6,12|4,13|2,14|8|1-14" class="hljs language-elixir" data-trim>
+							defmodule Geometry do
+								def area({:rectangle, a, b}), do: a * b
+
+								def area({:square, a}), do: a * a
+
+								def area({:circle, r}), do: r * r * :math.pi
+
+								def area(_), do: {:error, {:unknown_shape, nil}}
+							end
+
+							fun = &Geometry.area/1
+							fun.({:circle, 4})
+							fun.({:square, 5})
+							fun.({:rectangle, 4, 5})
+						</code>
+					</pre>
+				 </section>
+
+				<!-- Guards. -->
+				<section>
+					<h2> Guards! Guards! </h2>
+					<pre>
+						<code data-line-numbers="1-5|2|3|4|1-5" class="hljs language-elixir" data-trim>
+							defmodule TestNumber do
+								def test(x) when is_number(x) and x > 0, do: :positive
+								def test(x) when is_number(x) and x < 0, do: :negative
+								def test(x) when x === 0, do: :zero
+							end
+						</code>
+						<br>
+						<code data-line-numbers="1-7|1-7|2|3|6|7|1-7" class="hljs language-elixir" data-trim>
+							defmodule Polymorphic do
+								def double(x) when is_number(x), do: 2 * x
+								def double(x) when is_binary(x), do: x <> x
+							end
+
+							Polymorphic.double(3)     # Returns: 6
+							Polymorphic.double("Jar") # Returns: "JarJar"
+						</code>
+						<br>
+						<code data-line-numbers="1-4|1-4|2|3|1-4" class="hljs language-elixir" data-trim>
+							defmodule ListHelper do
+								def smallest(list) when length(list) > 0, do: Enum.min(list)
+								def smallest(_), do: {:error, :invalid_argument}
+							end
+						</code> 
+					</pre>
+				</section>
+
+				<!-- Concurrency. -->
+				<section>
+					<h2> Concurrency </h2>
+				</section>
+
+				<!-- Server process - about. -->
+				<section>
+					<h2> Server process (1/2)</h2>
+				</section>
+
+				<!-- Server process - code -->
+				<section>
+					<h2> Server process (2/2)</h2>
+				</section>
+
+				<!-- Gen server. -->
+				<section>
+					<h2> GenServer </h2>
+				</section>
+
+				<!-- Supervisors. -->
+				<section>
+					<h2> Supervisors </h2>
+				</section>
+
+				<!-- Supervision trees. -->
+				<section>
+					<h2> Supervision trees </h2>
+				</section>
+
+				<section>
+					<h2> Case studies </h2>
+					<ul>
+						<li> Discord </li>
+						<li> Heroku </li>
+						<li> V7 </li>
+						<li> Slab </li>
+						<li> PepsiCo </li>
+						<li> Adobe </li>
+					</ul>
 				</section>
 
 				<section>
 					<section>
-						<h2> Elixir </h2>
+						<h2> Ecosystem </h2>
+
 						<ul>
-							<li> Created as a R&D project at Platformatec (closed) by José Valim. </li>
-							<li> First release in 2012. </li>
-							<li> An alternative language for the Erlang virtual machine. </li>
-							<li> Makes Erlang platform more approachable. </li>
-							<li> Simplifies syntax, reduces boilerplate and duplication. </li>
-							<li> Compiles into BEAM-compliant bytecode </li>
-							<li> No performance penalty. </li>
-							<li> Extensible through macros. </li>
+							<li> <b>Phoenix Framework</b> - web framework</li>
+							<li> <b>Nerves</b> - embedded systems programming </li>
+							<li> <b>Membrane</b> - multimedia streaming and processing </li>
+							<li> <b>Numerical Elixir (Nx)</b> - numerical computations and machine learning </li>
 						</ul>
 					</section>
 
-					<section class="r-fit-text">
-						<h2> Server process in Erlang </h2>
+					<section>
+						<h2> Phoenix framework </h2>
 
-						<pre data-id="code" class="stretch">
-							<code data-line-numbers class="hljs stretch" data-trim>
-								-module(sum_server).
-								-behaviour(gen_server).
-
-								-export([
-									start/0,
-									sum/3,
-									init/1,
-									handle_call/3,
-									handle_cast/2,
-									handle_info/2,
-									terminate/2,
-									code_change/3
-								]).
-
-								start() -> gen_server:start(?MODULE, [], []).
-								sum(Server, A, B) -> gen_server:call(Server, {sum, A, B}).
-
-								init(_) -> {ok, undefined}.
-								handle_call({sum, A, B}, _From, State) -> {reply, A + B, State}.
-								handle_cast(_Msg, State) -> {noreply, State}.
-								handle_info(_Info, State) -> {noreply, State}.
-								terminate(_Reason, _State) -> ok.
-								code_change(_OldVsn, State, _Extra) -> {ok, State}.
-							</code>
-						</pre>
+						<ul>
+							<li> Middle ground between multi-page sites and single-page apps. </li>
+							<li> LiveView allows to render parts of HTML on the server. </li>
+							<li> ... </li>
+						</ul>
 					</section>
 
-					<section class="r-fit-text">
-						<h2> Server process in Elixir </h2>
-
-						<pre data-id="code">
-							<code data-line-numbers class="hljs" data-trim>
-								defmodule SumServer do
-									use GenServer
-
-									def start do
-										GenServer.start(__MODULE__, nil)
-									end
-
-									def sum(server, a, b) do
-										GenServer.call(server, {:sum, a, b})
-									end
-
-									def handle_call({:sum, a, b}, _from, state) do
-										{:reply, a + b, state}
-									end
-								end
-							</code>
-						</pre>
+					<section>
+						<h2> Nerves </h2>
+						<ul>
+							<li>...</li>
+						</ul>
 					</section>
+
+					<section>
+						<h2> Membrane </h2>
+						<ul>
+							<li>...</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2> Nx </h2>
+						<ul>
+							<li>...</li>
+						</ul>
+					</section>
+				</section>
+
+				<section>
+					<h2> Summary </h2>
+					<ul>
+						<li> Still remains niche a technology. </li>
+					</ul>
+				</section>
+
+				<section style="height: 100%;">
+					<div style="display: flex !important; justify-content: center; align-items: center; height: 100%;">
+						<h1>Q&A</h1>
+					</div>
 				</section>
 			</div>
 		</div>
@@ -136,7 +424,7 @@
 				hash: true,
 				center: false,
 				slideNumber: true,
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+				plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
 			});
 		</script>
 	</body>

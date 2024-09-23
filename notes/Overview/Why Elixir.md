@@ -1,7 +1,7 @@
 Modern functional programming language for building large-scale, distributed, fault tolerant, and scalable systems for the [[Erlang goals|Erlang]] virtual machine. Elixir lowers the entry barrier into the Erlang. Can use all Erlang features and the OTP framework that ships with Erlang.
 It's an alternative language for the Erlang virtual machine, that allow for writing cleaner, more compact that better reveals programmer's intentions.
 Code is compiled into BEAM-compliant byte code, and can run on the BEAM and communicate with other Erlang code. Provides some constructs that significantly reduce boilerplate and duplication.\
-
+2
 #### Benefits
 ###### Code simplification
 Erlang server process (adds two numbers):

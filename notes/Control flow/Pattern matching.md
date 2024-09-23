@@ -2,15 +2,16 @@ Equality `=` operator is not an assignment, but a match operator. When "assignin
 
 Tuple pattern matching:
 ```
+a = 100
+100 = a
 {name, age} = {"Bob", 27}
 {:person, name, age} = {:person, "Bob", 27}
 {{year, month, day}, time} = :calendar.local_time()
 {_, time} = :calendar.local_time()
 {_, {hour, _, _}} = :calendar.local_time()
-{a, a, a} = {127, 127, 1} # Fails.
+{a, a, a} = {127, 127, 1}
 
-expected_name = "Bob"
-{^expected_name, _} = {"Bob", 25}
+3
  %{name: name, age: age} = %{name: "Bob", age: 25} # Matching maps.
  [_, {name, _}, _] = [{"Bob", 25}, {"Alice", 30}, {"John", 35}] # Note: good for highlighting code in steps for slide.
 ```

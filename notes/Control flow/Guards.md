@@ -1,17 +1,9 @@
 Extension of the basic pattern matching mechanism.
 ```
 defmodule TestNumber do
-	def test(x) when is_number(x) and x > 0 do
-		:positive
-	end
-
-	def test(x) when is_number(x) and x < 0 do
-		:negative
-	end
-
-	def test(x) when x == 0 do
-		:zero
-	end
+	def test(x) when is_number(x) and x > 0, do: :positive
+	def test(x) when is_number(x) and x < 0, do: :negative
+	def test(x) when x == 0, do: :zero
 end
 ```
 
@@ -30,6 +22,7 @@ Conditional branching:
 defmodule Polymorphic do
 	def double(x) when is_number(x), do: 2 * x
 	def double(x) when is_binary(x), do: x <> x
+	def double(_), do: nil
 end
 
 Polymorphic.double(3)     # Returns: 6
