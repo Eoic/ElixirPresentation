@@ -26,69 +26,15 @@
 					<h2> The Elixir Programming Language </h2>
 				</section>
 
-				<!-- Erlang history. -->
+				<!-- About Elixir 1. -->
 				<section>
-					<h2> The history of Erlang </h2>
+					<h2> About Elixir </h2>
 					<ul>
-						<li> Created at Ericsson in 1980s.</li>
-						<li> Developed for handling telephone switches with millions of concurrent connections. </li>
-						<li> Banned by Ericsson for internal use in 1998 (open sourced the same year). </li>
-						<li> Adopted outside telecoms - messaging systems, databases, IoT, fintech </li>
-					</ul>
-				</section>
-
-				<!-- Design goals (Erlang) -->
-				<section>
-					<h2> Erlang's design goals </h2>
-					<ul>
-						<li> <b>Concurrency</b> - run many processes in parallel. </li>
-						<li> <b>Fault tolerance</b> - prevent error from affecting the entire system. </li>
-						<li> <b>High availability</b> - minimize downtime. </li>
-						<li> <b>Responsiveness</b> - handle requests quickly. </li>
-						<li> <b>Distribution</b>  - scale across hardware. </li>
-						<li> <b>Live updates</b> - update code on-the-fly. </li>
-					</ul>
-				</section>
-
-				<!-- Notable Erlang projects. -->
-				<section>
-					<h2> Notable projects </h2>
-					<ul>
-						<li> <b>Ejabberd</b> - real-time messaging platform. </li>
-						<li> <b>CouchDB</b> - NoSQL database. </li>
-						<li> <b>RabbitMQ</b> - AMQP messaging broker. </li>
-						<li> <b>Facebook Chat</b> - later rewritten in C++. </li>
-						<li> <b>WhatsApp</b> - instant messaging and VoIP service. </li>
-						<li> <b>Riak</b> - distributed key-value store. </li>
-					</ul>
-				</section>
-
-				<!-- BEAM concurrency 1. -->
-				<section>
-					<h3> Concurrency model (1/2) </h3>
-					<img style="width: 100%; height: auto;" src="./images/beam.svg">
-				</section>
-
-				<!-- BEAM concurrency 2. -->
-				<section>
-					<h3> Concurrency model (2/2) </h3>
-					<ul>
-						<li> The unit of concurrency is an Erlang process. </li>
-						<li> Processes are <b>lightweight</b> - few μs to create, under a few KB in size. </li>
-						<li> Schedulers allocate time-slots for each process, usually under 1 ms. </li>
-						<li> Processes are isolated, <b>share no memory</b> and communicate through <b>asynchronous messages</b>. </li>
-						<li> In theory, single BEAM instance can handle up to <b>134 million</b> concurrent processes. </li>
-					</ul>
-				</section>
-				
-				<!-- Elixir history. -->
-				<section>
-					<h2> The history of Elixir </h2>
-					<ul>
-						<li> Created as a R&D project at Platformatec by José Valim. </li>
-						<li> Intended to make Erlang platform more approachable, enhance productivity, allow for higher extensibility. </li>
-						<li> Aimed for developing large-scale, fault-tolerant sites and systems. </li>
-						<li> First release in 2012. </li>
+						<li> Dynamic, functional programming language. </li>
+						<li> Aimed for developing large-scale, fault-tolerant systems. </li>
+						<li> Designed to be practical, with focus on developer productivity (Ruby-like syntax). </li>
+						<li> Functional programming language that runs on the Erlang VM (BEAM). </li>
+						<li> Created as an R&D project at Platformatec by José Valim in 2012. </li>
 					</ul>
 				</section>
 
@@ -96,9 +42,9 @@
 				<section>
 					<h2> Elixir features </h2>
 					<ul>
+						<li> FP: immutability, pure and high order functions. </li>
 						<li> Polymorphism for deciding behavior at runtime. </li>
 						<li> Metaprogramming support through macros. </li>
-						<li> Compiles into BEAM-compliant bytecode. </li>
 						<li> Can communicate with Erlang code. </li>
 						<li> No runtime penalty - everything is done at compile-time. </li>
 						<li> Simplifies syntax and library APIs, reduces Erlang's boilerplate code. </li>
@@ -164,6 +110,62 @@
 					</pre>
 				</section>
 
+				<!-- Erlang history. -->
+				<section>
+					<h2> The history of Erlang </h2>
+					<ul>
+						<li> Created at Ericsson in 1980s.</li>
+						<li> Developed for handling telephone switches with millions of concurrent connections. </li>
+						<li> Banned by Ericsson for internal use in 1998 (open sourced the same year). </li>
+						<li> Adopted outside telecoms - messaging systems, databases, IoT, fintech </li>
+					</ul>
+				</section>
+
+				<!-- Design goals (Erlang) -->
+				<section>
+					<h2> Erlang's design goals </h2>
+					<ul>
+						<li> <b>Concurrency</b> - run many processes in parallel. </li>
+						<li> <b>Fault tolerance</b> - prevent error from affecting the entire system. </li>
+						<li> <b>High availability</b> - minimize downtime. </li>
+						<li> <b>Responsiveness</b> - handle requests quickly. </li>
+						<li> <b>Distribution</b>  - scale across hardware. </li>
+						<li> <b>Live updates</b> - update code "on the fly". </li>
+					</ul>
+				</section>
+
+				<!-- Notable Erlang projects. -->
+				<section>
+					<h2> Projects using Erlang </h2>
+					<ul>
+						<li> <b>WhatsApp</b> - instant messaging and VoIP service. </li>
+						<li> <b>Ejabberd</b> - real-time messaging platform. </li>
+						<li> <b>CouchDB</b> - NoSQL database. </li>
+						<li> <b>RabbitMQ</b> - AMQP messaging broker. </li>
+						<li> <b>Facebook Chat</b> - later rewritten in C++. </li>
+						<li> <b>Riak</b> - distributed key-value store. </li>
+						<li> <b>Bet365</b> - online betting site. </li>
+					</ul>
+				</section>
+
+				<!-- Notable Elixir projects. -->
+				<section>
+					<h2> Projects using Elixir </h2>
+					<ul style="font-size: 37px;">
+						<li> <b> Discord </b> - handling millions of server events per second. </li>
+						<li> <b> Pinterest </b> - used for notifications system, saved 2 million USD after rewrite. </li>
+						<li> <b> Slab </b> - real-time, collaborative knowledge base and wiki. </li>
+						<li> <b> Heroku </b> - for analytics, dashboards, data processing. </li>
+						<li> <b> V7 </b> - computer vision, task automation using AI. </li>
+						<li> <b> Other projects</b>: PepsiCo, SparkMeter, X-Plane 11. </li>
+					</ul>
+				</section>
+
+				<!-- Elixir project - case study. -->
+				<section>
+					<img src="./images/pinterested-tweet.png" style="width: 100%; height: auto; border-radius: 0.5em;">
+				</section>
+			
 				<!-- Disadvantages of Erlang / Elixir. -->
 				<section>
 					<h2> Disadvantages </h2>
@@ -177,6 +179,7 @@
 				<!-- Type system 1. -->
 				<section>
 					<h2> Type system (1/2) </h2>
+
 				</section>
 
 				<!-- Type system 2. -->
@@ -184,11 +187,45 @@
 					<h2> Type system (2/2) </h2>
 				</section>
 
+				<section>
+					<h2> Modules and functions</h2>
+					<ul>
+						<li> Each module is compiled into separate BEAM bytecode file. </li>
+						<li> A function must be declared inside a module. </li>
+					</ul>
+					<pre>
+						<code data-line-numbers class="hljs language-elixir" data-trim>
+							defmodule Todo do
+								def add_entry(todo, title, date) do
+									# Add entry...
+								end
+
+								def remove_entry(todo, date) do
+									# Remove entry...
+								end
+
+								def get_entries(todo, date) do
+									# Return entries on the given date.
+								end
+							end
+						</code>
+					</pre>
+				</section>
+
 				 <!-- Pipe operator. -->
 				<section>
 					<h2> Pipe operator |> </h2>
 					<p> Passes the result of the previous function as a first argument of the next function.  </p>
 					<pre>
+						<code data-line-numbers class="hljs language-elixir" data-trim>
+							def process_xml(model, xml) do
+								model
+								|> update(xml)
+								|> process_changes()
+								|> persist()
+							end
+						</code>
+					</pre>
 				</section>
 
 				<!-- Immutability -->
@@ -196,7 +233,7 @@
 					<h2> Immutability </h2>
 					<ul>
 						<li>Side-effect free data transformations.</li>
-						<li>Memory is still <b>shared</b> as mush as possible. </li>
+						<li>Memory is still <b>shared</b> as much as possible. </li>
 						<li>Easier to analyze, understand and test. </li>
 						<li>No variable is <b>implicitly changed</b>. </li>
 					</ul>
@@ -237,11 +274,12 @@
 					<img class="r-stretch" src="./images/list_copy.svg" style="margin: 0 auto; display: inherit;">
 				</section>
 
-				<!-- Pattern matching. -->
+				<!-- Pattern matching 1. -->
 				<section>
 					<h2> Pattern matching </h2>
+					<p> Match <b>expression value</b> on the right to the <b>pattern</b> on the left. </p>
 					<pre>
-						<code data-line-numbers="1-15|1|2|3|5|6|8|9|10|12|14|15" class="hljs language-elixir" data-trim>
+						<code data-line-numbers="1-15|1|2|3|5|6|8|9|10|12|14|15|1-15" class="hljs language-elixir" data-trim>
 							1 = 1
 							a = 100
 							100 = a
@@ -261,31 +299,61 @@
 					</pre>
 				</section>
 
-				 <section>
-					<h2> Multiclause functions</h2>
+				<!-- Pattern matching 2. -->
+				<section>
+					<h2> Pattern matching </h2>
 					<pre>
-						<code data-line-numbers="1-14|6,12|4,13|2,14|8|1-14" class="hljs language-elixir" data-trim>
-							defmodule Geometry do
-								def area({:rectangle, a, b}), do: a * b
+						<code data-line-numbers class="hljs language-elixir" data-trim>
+							defp extract_login(%{"login" => login}), do: {:ok, login}
+							defp extract_login(_), do: {:error, "login missing"}
 
-								def area({:square, a}), do: a * a
+							defp extract_email(%{"email" => email}), do: {:ok, email}
+							defp extract_email(_), do: {:error, "email missing"}
 
-								def area({:circle, r}), do: r * r * :math.pi
+							defp extract_password(%{"password" => password}), do: {:ok, password}
+							defp extract_password(_), do: {:error, "password missing"}
 
-								def area(_), do: {:error, {:unknown_shape, nil}}
+							def extract_user(user) do
+								with {:ok, login} <- extract_login(user),
+									{:ok, email} <- extract_email(user),
+									{:ok, password} <- extract_password(user) do
+									{:ok, %{login: login, email: email, password: password}}
+								end
 							end
-
-							fun = &Geometry.area/1
-							fun.({:circle, 4})
-							fun.({:square, 5})
-							fun.({:rectangle, 4, 5})
 						</code>
 					</pre>
-				 </section>
+				</section>
 
-				<!-- Guards. -->
+				<!-- Multiclause functions. -->
+				 <section>
+					<section>
+						<h2> Multiclause functions</h2>
+						<p> Call the function variant according to the matching pattern. </p>
+						<pre>
+							<code data-line-numbers="1-16|2,12|4,13|6,14|8,15|1-15" class="hljs language-elixir" data-trim>
+								defmodule Geometry do
+									def area({:circle, r}), do: r * r * :math.pi
+
+									def area({:square, a}), do: a * a
+
+									def area({:rectangle, a, b}), do: a * bf
+
+									def area(_), do: {:error, {:unknown_shape, nil}}
+								end
+
+								fun = &Geometry.area/1
+								fun.({:circle, 4})
+								fun.({:square, 5})
+								fun.({:rectangle, 4, 5})
+								fun.({:cube, 12})
+							</code>
+						</pre>
+					</section>
+
+									<!-- Guards 1. -->
 				<section>
 					<h2> Guards! Guards! </h2>
+					<h6> Example #1 </h6>
 					<pre>
 						<code data-line-numbers="1-5|2|3|4|1-5" class="hljs language-elixir" data-trim>
 							defmodule TestNumber do
@@ -294,44 +362,128 @@
 								def test(x) when x === 0, do: :zero
 							end
 						</code>
-						<br>
-						<code data-line-numbers="1-7|1-7|2|3|6|7|1-7" class="hljs language-elixir" data-trim>
+					</pre>
+				</section>
+
+				<!-- Guards 2. -->
+				<section>
+					<h2> Guards! Guards! </h2>
+					<h6> Example #2 </h6>
+					<pre>
+						<code data-line-numbers="1-12|2-4,11|6-8,12|1-12" class="hljs language-elixir" data-trim>
 							defmodule Polymorphic do
-								def double(x) when is_number(x), do: 2 * x
-								def double(x) when is_binary(x), do: x <> x
+								def double(x) when is_number(x) do
+									2 * x
+								end
+
+								def double(x) when is_binary(x) do
+									x <> x
+								end
 							end
 
 							Polymorphic.double(3)     # Returns: 6
 							Polymorphic.double("Jar") # Returns: "JarJar"
 						</code>
-						<br>
-						<code data-line-numbers="1-4|1-4|2|3|1-4" class="hljs language-elixir" data-trim>
-							defmodule ListHelper do
-								def smallest(list) when length(list) > 0, do: Enum.min(list)
-								def smallest(_), do: {:error, :invalid_argument}
-							end
-						</code> 
 					</pre>
 				</section>
+
+				<!-- Guards 3. -->
+				<section>
+					<h2> Guards! Guards! </h2>
+					<h6> Example #3 </h6>
+					<pre>
+						<code data-line-numbers="1-13|2-4,11|6-8,12-13|1-13" class="hljs language-elixir" data-trim>
+							defmodule ListHelper do
+								def smallest(list) when length(list) > 0 do
+									Enum.min(list)
+								end
+
+								def smallest(_) do
+									{:error, :invalid_argument}
+								end
+							end
+
+							ListHelper.smallest([1, 2, 3]) # Returns: 1
+							ListHelper.smallest([])  # Returns: {:error, :invalid_argument}
+							ListHelper.smallest("Hello.")  # Returns: {:error, :invalid_argument}
+						</code>
+					</pre>
+				</section>
+				 </section>
 
 				<!-- Concurrency. -->
 				<section>
 					<h2> Concurrency </h2>
+					<ul>
+						<li> The unit of concurrency is an Erlang process. </li>
+						<li> Processes are <b>lightweight</b> - few μs to create, under a few KB in size. </li>
+						<li> Schedulers allocate time-slots for each process, usually under 1 ms. </li>
+						<li> Messages are stored in the "mailbox" of the receiver process and read in FIFO order. </li>
+						<li> Processes do not share memory, and message data is deep copied. </li>
+						<!-- <li> In theory, single BEAM instance can handle up to <b>134 million</b> concurrent processes. </li> -->
+					</ul>
 				</section>
+
+				<!-- BEAM concurrency 1. -->
+				<section>
+					<h3> Concurrency model (1/2) </h3>
+					<img style="width: 100%; height: auto;" src="./images/beam.svg">
+				</section>
+
+				<!-- BEAM concurrency 2. -->
+
 
 				<!-- Server process - about. -->
 				<section>
 					<h2> Server process (1/2)</h2>
+					<ul>
+						<li> Run an infinite loop in a separate process. </li>
+						<li> Maintain the process state through tail call recursion. </li>
+						<li> React to sync and async messages. </li>
+						<li> Send a response back to the caller (if sync). </li>
+						<li> Can roll your own, but Elixir offers abstractions such as <b><code>GenServer</code></b>.</li>
+					</ul>
 				</section>
 
 				<!-- Server process - code -->
 				<section>
 					<h2> Server process (2/2)</h2>
-				</section>
+					<pre class="r-stretch" style="font-size: 13px;">
+						<code class="hljs language-elixir" data-trim>
+							defmodule DatabaseServer do
+								def start, do: spawn(&loop/0)
 
-				<!-- Gen server. -->
-				<section>
-					<h2> GenServer </h2>
+								def run_async(server_pid, query) do
+									send(server_pid, {:run_query, self(), query})
+								end
+
+								def get_result() do
+									receive do
+										{:query_result, result} -> result
+									end
+								end
+
+								defp loop do
+									receive do
+										{:run_query, caller, query} ->
+											result = run_query(query)
+											send(caller, {:query_result, result})
+									end
+
+									loop()
+								end
+
+								defp run_query(query) do
+									Process.sleep(2000)
+									"#{query} result"
+								end
+							end
+
+							server_pid = DatabaseServer.start()
+							DatabaseServer.run_async(server_pid, "Query #1")
+							DatabaseServer.get_result()
+						</code>
+					</pre>
 				</section>
 
 				<!-- Supervisors. -->
@@ -345,57 +497,48 @@
 				</section>
 
 				<section>
-					<h2> Case studies </h2>
-					<ul>
-						<li> Discord </li>
-						<li> Heroku </li>
-						<li> V7 </li>
-						<li> Slab </li>
-						<li> PepsiCo </li>
-						<li> Adobe </li>
-					</ul>
-				</section>
-
-				<section>
 					<section>
 						<h2> Ecosystem </h2>
 
 						<ul>
-							<li> <b>Phoenix Framework</b> - web framework</li>
-							<li> <b>Nerves</b> - embedded systems programming </li>
-							<li> <b>Membrane</b> - multimedia streaming and processing </li>
-							<li> <b>Numerical Elixir (Nx)</b> - numerical computations and machine learning </li>
+							<li> <b>Phoenix Framework</b> - a web framework. </li>
+							<li> <b>Nerves</b> - embedded systems development platform. </li>
+							<li> <b>Membrane</b> - multimedia streaming and processing. </li>
+							<li> <b>Numerical Elixir</b> - numerical computations and machine learning. </li>
 						</ul>
 					</section>
 
 					<section>
-						<h2> Phoenix framework </h2>
-
+						<h2> Phoenix Framework </h2>
 						<ul>
-							<li> Middle ground between multi-page sites and single-page apps. </li>
-							<li> LiveView allows to render parts of HTML on the server. </li>
-							<li> ... </li>
+							<li> Implements MVC pattern. </li>
+							<li> <b>LiveView</b> allows to render parts of HTML on the server - middle ground between multi-page sites and SPAs. </li>
+							<li> Instead of rendering the entire page, only the change is sent to the client over the WebSocket. </li>
 						</ul>
 					</section>
 
 					<section>
 						<h2> Nerves </h2>
 						<ul>
-							<li>...</li>
+							<li>Building, deploying and maintaining embedded Linux applications.</li>
+							<li>Provides tools for configuring devices adn networks, managing builds, I/O, firmware updates, creating UIs, etc.</li>
 						</ul>
 					</section>
 
 					<section>
 						<h2> Membrane </h2>
 						<ul>
-							<li>...</li>
+							<li> Concurrent and reliable multimedia processing framework.</li>
+							<li> Stream over WebRTC, RTSP, RTMP, HLS, HTTP, etc. </li>
+							<li> Process video, audio, generate MP4, MKV, FLV containers. </li>
 						</ul>
 					</section>
 
 					<section>
-						<h2> Nx </h2>
+						<h2> Numerical Elixir </h2>
 						<ul>
-							<li>...</li>
+							<li> Offers various libraries for numerical computing and machine learning. </li>
+							<li> Can run concurrent numerical multi-node computations on the CPU and the GPU. </li>
 						</ul>
 					</section>
 				</section>
@@ -403,7 +546,11 @@
 				<section>
 					<h2> Summary </h2>
 					<ul>
-						<li> Still remains niche a technology. </li>
+						<li> Still remains a niche technology. </li>
+						<li> Can be a great choice for specialized use cases, where massive scale and high reliability is desirable. </li>
+						<li> Great documentation and active community. </li>
+						<li> Functional programming and immutability concepts aren't popular. </li>
+						<li> Lack of corporate backing. </li>
 					</ul>
 				</section>
 

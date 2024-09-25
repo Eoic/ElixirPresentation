@@ -2,9 +2,7 @@ Informal name for a process that runs for a long time (or forever) and handles v
 
 ```
 defmodule DatabaseServer do
-	def start do
-		spawn(&loop/0)
-	end
+	def start, do: spawn(&loop/0)
 
 	def run_async(server_pid, query) do
 		send(server_pid, {:run_query, self(), query})
@@ -13,8 +11,6 @@ defmodule DatabaseServer do
 	def get_result() do
 		receive do
 			{:query_result, result} -> result
-		after 
-			5000 -> {:error, :timeout}
 		end
 	end
 
@@ -23,7 +19,7 @@ defmodule DatabaseServer do
 			{:run_query, caller, query} ->
 				result = run_query(query)
 				send(caller, {:query_result, result})
-		end
+		endf
 
 		loop()
 	end

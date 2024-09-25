@@ -2,6 +2,8 @@
  * Layout helpers.
  */
 
+@use 'sass:color';
+
 // Stretch an element vertically based on available space
 .reveal .stretch,
 .reveal .r-stretch {
@@ -101,6 +103,12 @@ $c-primary-dark: #220e45;
 	ul {
 		li {
 			margin-bottom: 0.35em;
+		}
+	}
+
+	p, ul li {
+		b {
+			color: color.scale($c-primary, $lightness: 85%); 
 		}
 	}
 }
