@@ -40,20 +40,27 @@
 
 				<!-- Elixir features. -->
 				<section>
-					<h2> Elixir features </h2>
+					<h2> Elixir features (1/2) </h2>
 					<ul>
 						<li> FP: immutability, pure and high order functions. </li>
 						<li> Polymorphism for deciding behavior at runtime. </li>
-						<li> Metaprogramming support through macros. </li>
-						<li> Can communicate with Erlang code. </li>
+						<li> Metaprogramming support through macros, allowing language extensions for specific domains. </li>
+					</ul>
+				</section>
+
+				<section>
+					<h2> Elixir features (2/2) </h2>
+					<ul>
+						<li> Makes Erlang platform more approachable. </li>
 						<li> No runtime penalty - everything is done at compile-time. </li>
-						<li> Simplifies syntax and library APIs, reduces Erlang's boilerplate code. </li>
+						<li> Simplifies syntax, standard library APIs, reduces Erlang's boilerplate code. </li>
+						<li> Gradual set-theoretic types (in progress). </li>
 					</ul>
 				</section>
 
 				<!-- Server process - Erlang. -->
 				<section class="r-fit-text">
-					<h3> Server process in Erlang </h3>
+					<h3> Process in Erlang </h3>
 
 					<pre class="stretch">
 						<code data-line-numbers class="hljs stretch" data-trim>
@@ -86,7 +93,7 @@
 
 				<!-- Server process - Elixir. -->
 				<section class="r-fit-text">
-					<h3> Server process in Elixir </h3>
+					<h3> Process in Elixir </h3>
 
 					<pre data-id="code">
 						<code data-line-numbers class="hljs" data-trim>
@@ -124,14 +131,14 @@
 				<!-- Design goals (Erlang) -->
 				<section>
 					<h2> Erlang's design goals </h2>
-					<ul>
+					<ol>
 						<li> <b>Concurrency</b> - run many processes in parallel. </li>
 						<li> <b>Fault tolerance</b> - prevent error from affecting the entire system. </li>
-						<li> <b>High availability</b> - minimize downtime. </li>
-						<li> <b>Responsiveness</b> - handle requests quickly. </li>
+						<li> <b>High availability</b> - run with minimal downtime. </li>
+						<li> <b>Responsiveness</b> - handle requests consistently. </li>
 						<li> <b>Distribution</b>  - scale across hardware. </li>
 						<li> <b>Live updates</b> - update code "on the fly". </li>
-					</ul>
+					</ol>
 				</section>
 
 				<!-- Notable Erlang projects. -->
@@ -139,7 +146,6 @@
 					<h2> Projects using Erlang </h2>
 					<ul>
 						<li> <b>WhatsApp</b> - instant messaging and VoIP service. </li>
-						<li> <b>Ejabberd</b> - real-time messaging platform. </li>
 						<li> <b>CouchDB</b> - NoSQL database. </li>
 						<li> <b>RabbitMQ</b> - AMQP messaging broker. </li>
 						<li> <b>Facebook Chat</b> - later rewritten in C++. </li>
@@ -153,38 +159,109 @@
 					<h2> Projects using Elixir </h2>
 					<ul style="font-size: 37px;">
 						<li> <b> Discord </b> - handling millions of server events per second. </li>
-						<li> <b> Pinterest </b> - used for notifications system, saved 2 million USD after rewrite. </li>
+						<li> <b> Pinterest </b> - for client metrics, notifications system, <i>claims</i> to have saved 2 million USD after rewrite. </li>
 						<li> <b> Slab </b> - real-time, collaborative knowledge base and wiki. </li>
-						<li> <b> Heroku </b> - for analytics, dashboards, data processing. </li>
+						<li> <b> Heroku </b> - analytics, dashboards, data processing. </li>
 						<li> <b> V7 </b> - computer vision, task automation using AI. </li>
 						<li> <b> Other projects</b>: PepsiCo, SparkMeter, X-Plane 11. </li>
 					</ul>
 				</section>
 
 				<!-- Elixir project - case study. -->
-				<section>
-					<img src="./images/pinterested-tweet.png" style="width: 100%; height: auto; border-radius: 0.5em;">
+				<section class="flex-col-inner">
+					<div>
+						<img src="./images/pinterested-tweet.png" style="width: 100%; height: auto; border-radius: 0.5em;">
+						<small>
+							(Source: <a href="https://x.com/coryodaniel/status/1029414668681469952">https://x.com/coryodaniel/status/1029414668681469952</a>)
+						</small>
+					</div>
 				</section>
 			
 				<!-- Disadvantages of Erlang / Elixir. -->
 				<section>
 					<h2> Disadvantages </h2>
 					<ul>
-						<li> Not suitable for heavy CPU-bound work, but good for I/O. </li>
-						<li> Cannot achieve the speed of machine compiled languages (e.g, C/C++), but can keep performance consistent. </li>
+						<li> Not suitable for heavy <b>CPU-bound</b> work, but good for <b>I/O</b>. </li>
+						<li> Cannot achieve the speed of machine compiled languages (e.g, C/C++), but can keep performance <b>consistent</b>. </li>
 						<li> Relatively small ecosystem compared to JavaScript, Ruby, etc. </li>
 					</ul>
 				</section>
 
-				<!-- Type system 1. -->
+				<!-- Type system. -->
 				<section>
-					<h2> Type system (1/2) </h2>
+					<h2> Type system </h2>
+					<div class="grid col-2">
+						<div>
+							<ul>
+								<li>
+									<b style="display: block;"> Integers & floats </b>
+									<small> Integers are unlimited in size. </small>
+								</li>
 
-				</section>
+								<li>
+									<b> Atoms </b>
+									<pre>
+										<code class="hljs language-elixir" data-trim>
+											:an_atom
+											:"an atom w/ spaces"
+										</code>
+									</pre>
+									<small>Module names, <code>true</code>, <code>false</code> and <code>nil</code> are atoms</small>
+								</li>
 
-				<!-- Type system 2. -->
-				<section>
-					<h2> Type system (2/2) </h2>
+								<li>
+									<b> Binaries & bitstrings </b>
+									<pre>
+										<code class="hljs language-elixir" data-trim>
+											<<1, 2, 3>>
+											"Hello world."
+										</code>
+									</pre>
+								</li>
+							</ul>
+						</div>
+						
+						<div>
+							<ul>
+								<li>
+									<b> Linked lists </b>
+									<pre style="width: 100%;">
+										<code class="hljs language-elixir" data-trim>
+											[1, 2, 3]
+											[head | tail] = [1, 2, 3]
+										</code>
+									</pre>
+								</li>
+
+								<li>
+									<b> Maps </b>
+									<pre style="width: 100%;">
+										<code class="hljs language-elixir" data-trim>
+											%{"foo" => "bar", a: 1, b: 2}
+										</code>
+									</pre>
+								</li>
+
+								<li>
+									<b> Tuples </b>
+									<pre style="width: 100%;">
+										<code class="hljs language-elixir" data-trim>
+											{:one, 2, "Three"}
+										</code>
+									</pre>
+								</li>
+
+								<li>
+									<b> Ranges </b>
+									<pre style="width: 100%;">
+										<code class="hljs language-elixir" data-trim>
+											1..100
+										</code>
+									</pre>
+								</li>
+							</ul>
+						</div>
+					</div>
 				</section>
 
 				<section>
@@ -216,16 +293,35 @@
 				<section>
 					<h2> Pipe operator |> </h2>
 					<p> Passes the result of the previous function as a first argument of the next function.  </p>
-					<pre>
-						<code data-line-numbers class="hljs language-elixir" data-trim>
-							def process_xml(model, xml) do
-								model
-								|> update(xml)
-								|> process_changes()
-								|> persist()
-							end
-						</code>
-					</pre>
+					<div class="grid col-2">
+						<div>
+							<h5> Elixir </h5>
+							<pre>
+								<code data-line-numbers class="hljs language-elixir" data-trim>
+									def process_xml(model, xml) do
+										model
+										|> update(xml)
+										|> process_changes()
+										|> persist()
+									end
+								</code>
+							</pre>
+						</div>
+						
+						<div>
+							<h5> Erlang </h5>
+							<pre>
+								<code data-line-numbers class="hljs language-erlang" data-trim>
+									process_xml(Model, Xml) ->
+										persist(
+											process_changes(
+												update(Model, Xml)
+											)
+										).
+								</code>
+							</pre>
+						</div>
+					</div>
 				</section>
 
 				<!-- Immutability -->
@@ -276,52 +372,54 @@
 
 				<!-- Pattern matching 1. -->
 				<section>
-					<h2> Pattern matching </h2>
-					<p> Match <b>expression value</b> on the right to the <b>pattern</b> on the left. </p>
-					<pre>
-						<code data-line-numbers="1-15|1|2|3|5|6|8|9|10|12|14|15|1-15" class="hljs language-elixir" data-trim>
-							1 = 1
-							a = 100
-							100 = a
+					<section>
+						<h2> Pattern matching </h2>
+						<p> Match <b>expression value</b> on the right to the <b>pattern</b> on the left. </p>
+						<pre>
+							<code data-line-numbers="1-15|1|2|3|5|6|8|9|10|12|14|15|1-15" class="hljs language-elixir" data-trim>
+								a = 100
+								100 = a
+								1 = 1
 
-							{name, age} = {"Bob", 27}
-							{:person, name, age} = {:person, "Bob", 27}
+								{name, age} = {"Bob", 27}
+								{:person, name, age} = {:person, "Bob", 27}
 
-							{{year, month, day}, time} = :calendar.local_time()
-							{_, time} = :calendar.local_time()
-							{_, {hour, _, _}} = :calendar.local_time()
+								{{year, month, day}, time} = :calendar.local_time()
+								{_, time} = :calendar.local_time()
+								{_, {hour, _, _}} = :calendar.local_time()
 
-							{a, a, a} = {127, 127, 1}
+								{a, a, a} = {127, 127, 1}
 
-							expected_name = "Bob"
-							{^expected_name, _} = {"Bob", 25}
-						</code>
-					</pre>
-				</section>
+								expected_name = "Bob"
+								{^expected_name, _} = {"Bob", 25}
+							</code>
+						</pre>
+					</section>
 
-				<!-- Pattern matching 2. -->
-				<section>
-					<h2> Pattern matching </h2>
-					<pre>
-						<code data-line-numbers class="hljs language-elixir" data-trim>
-							defp extract_login(%{"login" => login}), do: {:ok, login}
-							defp extract_login(_), do: {:error, "login missing"}
-
-							defp extract_email(%{"email" => email}), do: {:ok, email}
-							defp extract_email(_), do: {:error, "email missing"}
-
-							defp extract_password(%{"password" => password}), do: {:ok, password}
-							defp extract_password(_), do: {:error, "password missing"}
-
-							def extract_user(user) do
-								with {:ok, login} <- extract_login(user),
-									{:ok, email} <- extract_email(user),
-									{:ok, password} <- extract_password(user) do
-									{:ok, %{login: login, email: email, password: password}}
+					<section>
+						<h2> Pattern matching </h2>
+						<p> A more complex example using <b><code>with</code></b> keyword. </p>
+						<pre>
+							<code data-line-numbers class="hljs language-elixir" data-trim>
+								defp extract_login(%{"login" => login}), do: {:ok, login}
+								defp extract_login(_), do: {:error, "login missing"}
+	
+								defp extract_email(%{"email" => email}), do: {:ok, email}
+								defp extract_email(_), do: {:error, "email missing"}
+	
+								defp extract_password(%{"password" => password}), do: {:ok, password}
+								defp extract_password(_), do: {:error, "password missing"}
+	
+								def extract_user(user) do
+									with {:ok, login} <- extract_login(user),
+										{:ok, email} <- extract_email(user),
+										{:ok, password} <- extract_password(user) do
+										{:ok, %{login: login, email: email, password: password}}
+									end
 								end
-							end
-						</code>
-					</pre>
+							</code>
+						</pre>
+					</section>
 				</section>
 
 				<!-- Multiclause functions. -->
@@ -411,16 +509,26 @@
 				</section>
 				 </section>
 
-				<!-- Concurrency. -->
+				<!-- Concurrency 1. -->
 				<section>
-					<h2> Concurrency </h2>
+					<h3> Concurrency - basics </h3>
 					<ul>
-						<li> The unit of concurrency is an Erlang process. </li>
+						<li> Erlang VM runs on a single <b>OS process</b>. </li>
+						<li> The <b>unit of concurrency</b> is an Erlang process. </li>
 						<li> Processes are <b>lightweight</b> - few μs to create, under a few KB in size. </li>
-						<li> Schedulers allocate time-slots for each process, usually under 1 ms. </li>
-						<li> Messages are stored in the "mailbox" of the receiver process and read in FIFO order. </li>
-						<li> Processes do not share memory, and message data is deep copied. </li>
-						<!-- <li> In theory, single BEAM instance can handle up to <b>134 million</b> concurrent processes. </li> -->
+						<li> Erlang VM creates <b>schedulers</b> to manage process execution. </li>
+						<li> Schedulers allocate time-slots for each process, usually under <b>1 ms</b>. </li>
+					</ul>
+				</section>
+
+				<!-- Concurrency 2. -->
+				<section>
+					<h3> Concurrency - processes </h3>
+					<ul>
+						<li> Processes communicate through <b>asynchronous messages</b>. </li>
+						<li> Processes <b>do not share memory</b> - message data is deep copied. </li>
+						<li> Messages are stored in the <b>"mailbox"</b> of the receiver process and read in FIFO order. </li>
+						<li> In theory, single BEAM instance can handle up to <b>134 million</b> concurrent processes. </li>
 					</ul>
 				</section>
 
@@ -438,18 +546,18 @@
 					<h2> Server process (1/2)</h2>
 					<ul>
 						<li> Run an infinite loop in a separate process. </li>
-						<li> Maintain the process state through tail call recursion. </li>
-						<li> React to sync and async messages. </li>
-						<li> Send a response back to the caller (if sync). </li>
+						<li> Maintain the process state through <b>tail call recursion</b>. </li>
+						<li> React to <b>sync</b> and <b>async</b> messages. </li>
+						<li> Send a response back to the caller. </li>
 						<li> Can roll your own, but Elixir offers abstractions such as <b><code>GenServer</code></b>.</li>
 					</ul>
 				</section>
 
 				<!-- Server process - code -->
-				<section>
+				<section class="r-stretch">
 					<h2> Server process (2/2)</h2>
-					<pre class="r-stretch" style="font-size: 13px;">
-						<code class="hljs language-elixir" data-trim>
+					<pre class="r-stretch" style="font-size: 13px; min-height: 100%;">
+						<code data-line-numbers class="hljs language-elixir" data-trim>
 							defmodule DatabaseServer do
 								def start, do: spawn(&loop/0)
 
@@ -489,11 +597,34 @@
 				<!-- Supervisors. -->
 				<section>
 					<h2> Supervisors </h2>
+					<blockquote style="width: 100%; padding: 0.5em 1em; border-radius: 6px;"> "Have you tried turning it off and on again?" </blockquote>
+					<ul>
+						<li>Monitors child processes - <b>workers</b> and other <b>supervisors</b>.</li>
+						<li>Applies restart strategy to roll back the system to the <b>stable state</b>. </li>
+						<li>"A once in a billion bug will show up every 3 hours in a system doing 100,000 requests per second." </li>
+					</ul>
+				</section>
+
+				<!-- Supervisor - restart policy. -->
+				<section>
+					<h2> Restart strategy </h2>
+					<div class="flex-col-inner">
+						<div>
+							<img src="./images/restart_policy.png" style="width: 100%; height: auto; border-radius: 0.5em;">
+							<small>(Source: <a href="https://adoptingerlang.org/docs/development/supervision_trees/">https://adoptingerlang.org/docs/development/supervision_trees/</a>)</small>
+						</div>
+					</div>
 				</section>
 
 				<!-- Supervision trees. -->
 				<section>
 					<h2> Supervision trees </h2>
+					<div class="flex-col-inner">
+						<div>
+							<img style="width: 100%; height: auto; border-radius: 0.5em;" src="./images/suptree.png">
+							<small style="text-align: center;">(Source: <a href="https://adoptingerlang.org/docs/development/supervision_trees/">https://adoptingerlang.org/docs/development/supervision_trees/</a>)</small>
+						</div>
+					</div>
 				</section>
 
 				<section>
@@ -513,15 +644,15 @@
 						<ul>
 							<li> Implements MVC pattern. </li>
 							<li> <b>LiveView</b> allows to render parts of HTML on the server - middle ground between multi-page sites and SPAs. </li>
-							<li> Instead of rendering the entire page, only the change is sent to the client over the WebSocket. </li>
+							<li> Instead of rendering the entire page, <b>only the changed part</b> is sent to the client over the WebSocket. </li>
 						</ul>
 					</section>
 
 					<section>
 						<h2> Nerves </h2>
 						<ul>
-							<li>Building, deploying and maintaining embedded Linux applications.</li>
-							<li>Provides tools for configuring devices adn networks, managing builds, I/O, firmware updates, creating UIs, etc.</li>
+							<li>For <b>building</b>, <b>deploying</b> and <b>maintaining</b> applications for IoT, embedded devices.</li>
+							<li>Provides tools for configuring devices and networks, managing builds, I/O, firmware updates, creating UIs, etc.</li>
 						</ul>
 					</section>
 

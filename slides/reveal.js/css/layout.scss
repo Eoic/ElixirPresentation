@@ -80,7 +80,19 @@ $c-primary-dark: #220e45;
 
 .reveal .slides > section {
 	padding: 1rem;
-	text-align:left;
+	text-align: left;
+
+	&.flex-col-inner, .flex-col-inner {
+		height: 100%;
+
+		div {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100%;
+			flex-direction: column;
+		}
+	}
 
 	h1, h2, h3 {
 		color: $c-primary-content;
@@ -100,15 +112,31 @@ $c-primary-dark: #220e45;
 		border-radius: 6px;
 	}
 
-	ul {
+	ul,
+	ol {
 		li {
 			margin-bottom: 0.35em;
 		}
 	}
 
-	p, ul li {
+	p,
+	ul li,
+	ol li {
 		b {
-			color: color.scale($c-primary, $lightness: 85%); 
+			color: color.scale($c-primary-dark, $lightness: 70%); 
+		}
+	}
+
+	.grid {
+		display: grid;
+
+		&.col-2 {
+			grid-template-columns: 1fr 1fr;
+
+			ul, ol {
+				margin-left: 0;
+				line-height: 1.2;
+			}
 		}
 	}
 }
