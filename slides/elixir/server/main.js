@@ -1,11 +1,24 @@
 const express = require('express');
 const { createServer } = require('node:http');
 const { join } = require('node:path');
-const { Server, Socket } = require('socket.io');
+const { Server } = require('socket.io');
+const os = require('os');
 const cors = require('cors');
 
 const SERVER_ADDRESS = '0.0.0.0';
 const SERVER_PORT = 9001;
+const ips = os.networkInterfaces();
+
+let ip = SERVER_ADDRESS;
+
+Object
+    .keys(ips)
+    .forEach(function (_interface) {
+        ips[_interface]
+            .forEach(function (_dev) {
+                if (_dev.family === 'IPv4' && !_dev.internal) ip = _dev.address
+            })
+    });
 
 const app = express();
 const server = createServer(app);
@@ -69,14 +82,17 @@ const handleConnect = (socket, role) => {
 
 const validateStatus = () => {
     if (activeSockets.follower && activeSockets.master)
-        console.log('Can begin remote control.')
+        console.info('Can begin remote control.')
+    else console.warn('Remote control not ready.')
 }
 
 // Socket.io connection event
 io.on('connection', (socket) => {
+    console.log(`Guest ${socket.id} connected.`)
+
     socket.on('register', (message) => {
-       handleConnect(socket, message.role);
-       validateStatus();
+        handleConnect(socket, message.role);
+        validateStatus();
     });
 
     socket.on('action', (message) => {
@@ -96,5 +112,5 @@ io.on('connection', (socket) => {
 });
 
 server.listen(SERVER_PORT, SERVER_ADDRESS, 511, () => {
-    console.log(`Controller server listening on http://${SERVER_ADDRESS}:${SERVER_PORT}.`);
+    console.log(`Controller server listening on http://${ip}:${SERVER_PORT}.`);
 });

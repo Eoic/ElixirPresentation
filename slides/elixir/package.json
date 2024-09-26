@@ -10,7 +10,8 @@
   "scripts": {
     "test": "gulp test",
     "start": "gulp serve",
-    "build": "gulp build"
+    "build": "gulp build",
+    "pm-start": "pm2 start npx --name presentation -- http-server -p 9000"
   },
   "author": {
     "name": "Hakim El Hattab",
