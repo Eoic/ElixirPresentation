@@ -129,6 +129,7 @@ $c-primary-dark: #220e45;
 
 	.grid {
 		display: grid;
+		column-gap: 0.8em;
 
 		&.col-2 {
 			grid-template-columns: 1fr 1fr;

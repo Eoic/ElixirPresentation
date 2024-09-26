@@ -10,7 +10,6 @@
 		<link rel="stylesheet" href="dist/reveal.css">
 		<link rel="stylesheet" href="dist/theme/night.css">
 		<link rel="stylesheet" href="plugin/highlight/an-old-hope.css">
-		<link rel="icon" type="image/x-icon" href="/images/favicon.ico">
 	</head>
 	<body>
 		<div class="reveal">
@@ -42,7 +41,7 @@
 				<section>
 					<h2> Elixir features (1/2) </h2>
 					<ul>
-						<li> FP: immutability, pure and high order functions. </li>
+						<li> FP: immutability, pattern matching, pure and high order functions. </li>
 						<li> Polymorphism for deciding behavior at runtime. </li>
 						<li> Metaprogramming support through macros, allowing language extensions for specific domains. </li>
 					</ul>
@@ -131,14 +130,14 @@
 				<!-- Design goals (Erlang) -->
 				<section>
 					<h2> Erlang's design goals </h2>
-					<ol>
+					<ul>
 						<li> <b>Concurrency</b> - run many processes in parallel. </li>
 						<li> <b>Fault tolerance</b> - prevent error from affecting the entire system. </li>
 						<li> <b>High availability</b> - run with minimal downtime. </li>
 						<li> <b>Responsiveness</b> - handle requests consistently. </li>
 						<li> <b>Distribution</b>  - scale across hardware. </li>
 						<li> <b>Live updates</b> - update code "on the fly". </li>
-					</ol>
+					</ul>
 				</section>
 
 				<!-- Notable Erlang projects. -->
@@ -220,7 +219,7 @@
 								</li>
 							</ul>
 						</div>
-						
+
 						<div>
 							<ul>
 								<li>
@@ -694,6 +693,7 @@
 		</div>
 
 		<script src="dist/reveal.js"></script>
+		<script src="dist/socket.io.min.js"></script>
 		<script src="plugin/notes/notes.js"></script>
 		<script src="plugin/markdown/markdown.js"></script>
 		<script src="plugin/highlight/highlight.js"></script>
@@ -703,6 +703,32 @@
 				center: false,
 				slideNumber: true,
 				plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
+			}).then(() => {
+				const socket = io("ws://localhost:9001");
+
+				socket.on('connect', () => {
+					socket.emit('register', { role: 'follower' });
+				});
+
+				socket.on('action', ({ action }) => {
+					switch (action) {
+						case 'left':
+							Reveal.left();
+							break;
+						case 'right':
+							Reveal.right();
+							break;
+						case 'up':
+							Reveal.up();
+							break;
+						case 'down':
+							Reveal.down();
+							break;
+						default: {
+							console.log('Unknown action:', action);
+						}
+					}
+				});
 			});
 		</script>
 	</body>

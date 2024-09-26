@@ -22,7 +22,7 @@ const autoprefixer = require('gulp-autoprefixer')
 
 const root = yargs.argv.root || '.'
 const port = yargs.argv.port || 9000
-const host = yargs.argv.host || 'localhost'
+const host = yargs.argv.host || '0.0.0.0'
 
 const banner = `/*!
 * reveal.js ${pkg.version}
@@ -92,6 +92,11 @@ gulp.task('js-es5', () => {
     });
 })
 
+gulp.task('copy-socket-io', () => {
+    return gulp.src('./external/socket.io.min.js')
+        .pipe(gulp.dest('./dist'));
+});
+
 // Creates an ES module bundle
 gulp.task('js-es6', () => {
     return rollup({
@@ -112,7 +117,8 @@ gulp.task('js-es6', () => {
             sourcemap: true
         });
     });
-})
+});
+
 gulp.task('js', gulp.parallel('js-es5', 'js-es6'));
 
 // Creates a UMD and ES module bundle for each of our
@@ -264,7 +270,7 @@ gulp.task('test', gulp.series( 'eslint', 'qunit' ))
 
 gulp.task('default', gulp.series(gulp.parallel('js', 'css', 'plugins'), 'test'))
 
-gulp.task('build', gulp.parallel('js', 'css', 'plugins'))
+gulp.task('build', gulp.parallel('js', 'css', 'plugins', 'copy-socket-io'))
 
 gulp.task('package', gulp.series(() =>
 
@@ -287,7 +293,6 @@ gulp.task('reload', () => gulp.src(['index.html'])
     .pipe(connect.reload()));
 
 gulp.task('serve', () => {
-
     connect.server({
         root: root,
         port: port,
@@ -296,6 +301,7 @@ gulp.task('serve', () => {
     })
 
     const slidesRoot = root.endsWith('/') ? root : root + '/'
+
     gulp.watch([
         slidesRoot + '**/*.html',
         slidesRoot + '**/*.md',
