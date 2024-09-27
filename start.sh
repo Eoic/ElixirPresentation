@@ -2,7 +2,7 @@
 pm2 delete all
 
 no_build=false
-no_install=false
+no_install=true
 
 for arg in "$@"; do
     case $arg in
