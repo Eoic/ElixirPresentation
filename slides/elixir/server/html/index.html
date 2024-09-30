@@ -31,7 +31,7 @@
             grid-template-columns: repeat(3, 1fr);
             grid-template-rows: repeat(3, 1fr);
             grid-template-areas: 
-                ". Up ."
+                "TopLeft Up TopRight"
                 "Left Control Right"
                 ". Down .";
             place-items: center;
@@ -66,6 +66,12 @@
 </head>
     <body>
         <div class="control">
+            <button data-ws-action="overview-on" style="grid-area: TopLeft;">
+                <i class="fa-solid fa-magnifying-glass-minus"></i>
+            </button>
+            <button data-ws-action="overview-off" style="grid-area: TopRight;">
+                <i class="fa-solid fa-magnifying-glass-plus"></i>
+            </button>
             <button data-ws-action="left" style="grid-area: Left;">
                 <i class="fa-solid fa-chevron-left"></i>
             </button>

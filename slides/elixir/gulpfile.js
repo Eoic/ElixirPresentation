@@ -321,7 +321,4 @@ gulp.task('serve', () => {
         'css/*.scss',
         'css/print/*.{sass,scss,css}'
     ], gulp.series('css-core', 'reload'))
-
-    gulp.watch(['test/*.html'], gulp.series('test'))
-
 })

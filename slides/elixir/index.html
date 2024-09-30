@@ -32,7 +32,7 @@
 						<li> Dynamic, functional programming language. </li>
 						<li> Aimed for developing large-scale, fault-tolerant systems. </li>
 						<li> Designed to be practical, with focus on developer productivity (Ruby-like syntax). </li>
-						<li> Functional programming language that runs on the Erlang VM (BEAM). </li>
+						<li> Runs on the Erlang VM (BEAM). </li>
 						<li> Created as an R&D project at Platformatec by José Valim in 2012. </li>
 					</ul>
 				</section>
@@ -606,13 +606,25 @@
 
 				<!-- Supervisor - restart policy. -->
 				<section>
-					<h2> Restart strategy </h2>
+					<h2> Restart strategy (1/2) </h2>
 					<div class="flex-col-inner">
 						<div>
 							<img src="./images/restart_policy.png" style="width: 100%; height: auto; border-radius: 0.5em;">
 							<small>(Source: <a href="https://adoptingerlang.org/docs/development/supervision_trees/">https://adoptingerlang.org/docs/development/supervision_trees/</a>)</small>
 						</div>
 					</div>
+				</section>
+
+				<section>
+					<h2> Restart strategy (2/2) </h2>
+					<blockquote style="width: 100%; padding: 0.5em 1em; border-radius: 6px;">
+						"...the supervisor just gives up on your code, shuts it down then kills itself to never return (that's how bad it is)."
+						<p style="color: #909090">&mdash;Learn You Some Erlang, <cite>Supervisors</cite></p>
+					</blockquote>
+					<ul>
+						<li> Processes can be permanent, temporary, and transient. </li>
+						<li> Only a predefined number of restarts are allowed in a time frame. </li>
+					</ul>
 				</section>
 
 				<!-- Supervision trees. -->
@@ -723,6 +735,12 @@
 							break;
 						case 'down':
 							Reveal.down();
+							break;
+						case 'overview-off':
+							Reveal.toggleOverview(false);
+							break;
+						case 'overview-on':
+							Reveal.toggleOverview(true);
 							break;
 						default: {
 							console.log('Unknown action:', action);
