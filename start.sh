@@ -1,7 +1,5 @@
 #!/bin/bash
-pm2 delete all
-
-no_build=false
+no_build=true
 no_install=true
 
 for arg in "$@"; do
@@ -18,18 +16,21 @@ for arg in "$@"; do
     esac
 done
 
-if $no_build; then
-    echo "Skipping build..."
-else
-    npm run --prefix ./slides/elixir build
-fi
-
 if $no_install; then
     echo "Skipping install..."
 else
-    npm ci --prefix ./slides/elixir
-    npm ci --prefix ./slides/elixir/server
+    npm ci --prefix ./slides
+    npm ci --prefix ./slides/server
+    npm install --global pm2
 fi
 
-npm run --prefix ./slides/elixir pm-start
-npm run --prefix ./slides/elixir/server pm-start
+pm2 delete all
+
+if $no_build; then
+    echo "Skipping build..."
+else
+    npm run --prefix ./slides build
+fi
+
+npm run --prefix ./slides pm-start
+npm run --prefix ./slides/server pm-start
