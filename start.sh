@@ -1,14 +1,14 @@
 #!/bin/bash
-no_build=true
-no_install=true
+build=false
+install=false
 
 for arg in "$@"; do
     case $arg in
-        --no-build)
-            no_build=true
+        --build)
+            build=true
             ;;
-        --no-install)
-            no_install=true
+        --install)
+            install=true
             ;;
         *)
             echo "Unknown argument: $arg"
@@ -16,20 +16,20 @@ for arg in "$@"; do
     esac
 done
 
-if $no_install; then
-    echo "Skipping install..."
+if $install; then
+    npm install --prefix ./slides
+    npm install --prefix ./slides/server
+    npm install -g pm2
 else
-    npm ci --prefix ./slides
-    npm ci --prefix ./slides/server
-    npm install --global pm2
+    echo "Skipping install..."
 fi
 
 pm2 delete all
 
-if $no_build; then
-    echo "Skipping build..."
-else
+if $build; then
     npm run --prefix ./slides build
+else
+    echo "Skipping build..."
 fi
 
 npm run --prefix ./slides pm-start
