@@ -22,19 +22,19 @@
 					data-background-position="85% 50%"
 					data-background-opacity="0.25"
 				>
-					<h2> Concurrent programming with Elixir </h2>
-					<p> "..." </p>
+					<h2 style="max-width: 75%"> Concurrent programming in Elixir </h2>
+					<p> It's <s style="text-decoration-thickness: 3px;">turtles</s> processes all the way down. </p>
 				</section>
 
 				<!-- About Elixir. -->
 				<section>
 					<h2> What is Elixir? </h2>
 					<ul>
-						<li> Dynamic, functional programming language. </li>
-						<li> Aimed for developing large-scale, fault-tolerant systems. </li>
-						<li> Designed to be practical, with focus on developer productivity (Ruby-like syntax). </li>
-						<li> Runs on the Erlang VM (BEAM). </li>
-						<li> Created as an R&D project at Platformatec by José Valim in 2012. </li>
+						<li> <b>Dynamic</b>, functional programming language. </li>
+						<li> Aimed at developing large-scale, fault-tolerant systems. </li>
+						<li> Runs on the <b>Erlang VM</b> (BEAM). </li>
+						<li> <b>Functions</b> are grouped into modules. </li>
+						<li> A <b>module</b> is the smallest unit of compilation. </li>
 					</ul>
 				</section>
 
@@ -42,10 +42,10 @@
 				<section>
 					<h2> Features </h2>
 					<ul>
-						<li> Data immutability, pattern matching, pure and high order functions. </li>
-						<li> Metaprogramming through macros. </li>
-						<li> Polymorphism for deciding behavior at runtime. </li>
-						<li> Compatibility with Erlang </li>
+						<li> Data immutability, <b>pattern matching</b>, higher order functions. </li>
+						<li> <b>Metaprogramming</b> through macros (for building DSLs). </li>
+						<li> Ad-hoc polymorphism (via protocols). </li>
+						<li> Offers high-level <b>abstractions</b> for implementing concurrency easily. </li>
 					</ul>
 				</section>
 
@@ -61,29 +61,43 @@
 					</ul>
 				</section>
 
-				<!-- Concurrency 2. -->
+				<!-- BEAM concurrency 1. -->
 				<section>
-					<h3> Processes </h3>
+					<h3> Concurrency model </h3>
+					<img style="width: 100%; height: auto;" src="./images/beam.svg">
+				</section>
+
+				<!-- <section>
+					<h3> Why processes? </h3>
+					<ul>
+						<li> Can take advantage of all available CPU resources. </li>
+						<li> Isolated from each other, which localizes the effects of run-time errors. </li>
+					</ul>
+				</section> -->
+
+				<!-- Process fundamentals. -->
+				<section>
+					<h3> Process fundamentals (1/2) </h3>
 					<ul>
 						<li> Processes communicate through <b>asynchronous messages</b>. </li>
 						<li> Processes <b>do not share memory</b> - message data is deep copied. </li>
 						<li> Messages are stored in the <b>"mailbox"</b> of the receiver process and read in FIFO order. </li>
+						<li> Processes are sequantial and consume messages one by one. </li>
 						<li> In theory, single BEAM instance can handle up to <b>134 million</b> concurrent processes. </li>
 					</ul>
 				</section>
 
-				<!-- BEAM concurrency 1. -->
 				<section>
-					<h3> Concurrency model (1/2) </h3>
-					<img style="width: 100%; height: auto;" src="./images/beam.svg">
+					<h3> Process fundamentals (2/2) </h3>
+					<ul>
+						<li> Garbage collection takes place at a process level. </li>
+						<li> Context switching happens frequently, so whatever th eprocess does, it will not block the entire system. </li>
+					</ul>
 				</section>
-
-				<!-- BEAM concurrency 2. -->
-
 
 				<!-- Server process - about. -->
 				<section>
-					<h2> Server process (1/2)</h2>
+					<h2> Server process </h2>
 					<ul>
 						<li> Run an infinite loop in a separate process. </li>
 						<li> Maintain the process state through <b>tail call recursion</b>. </li>
@@ -134,14 +148,153 @@
 					</pre>
 				</section>
 
+				<!-- Registered processes -->
+				 <section>
+					<h2> Registered processes </h2>
+					<ul>
+						<li> A process can be given a local name. </li>
+						<li> A name must be an atom, and unique within the BEAM instance. </li>
+						<li> TODO: Add code example. </li>
+					</ul>
+				 </section>
+
+				 <section>
+					<h2> OTP behaviours </h2>
+					<ul>
+						<li> OTP is a collection of middleware, patterns, libraries, tools, and protocols that are an integral part of Erlang. </li>
+						<li> <b>Generic code</b> that implements the common pattern (e.g. server process). </li>
+						<li> Accepts the <b>callback module</b> needs to implement contract functions </li>
+						<li> Examples are <code><b>GenServer</b></code>, <code><b>Agent</b></code>, <code><b>Task</b></code>, <code><b>Supervisor</b></code>, <code><b>DynamicSupervisor</b></code>, etc.</li>
+					</ul>
+				 </section>
+
+				 <!-- Gen server -->
+				 <section>
+					<h2> GenServer </h2>
+					<ul>
+						<li> An abstraction for implementing server processes. </li>
+						<li> Supports sync (call) and async (cast) operations.
+						<li> OTP compatible server process behavior. </li>
+						<li> Customizable timeouts for call requests. </li>
+					</ul>
+				 </section>
+
+				 <section>
+					<h2> GenServer example </h2>
+					...
+				 </section>
+
+				<!-- Registered processes -->
+				<section>
+					<h2> Fault tolerance </h2>
+					<ul>
+						<li> ... </li>
+					</ul>
+				</section>
+
+				<!-- Process links -->
+				<section>
+					<h2> Process links </h2>
+					<ul>
+						<li> A basic crash detection mechanism. </li>
+						<li> Links are like bidirectional comminication channels. </li>
+						<li> When process terminates abnormally, other process terminates as well. </li>
+					</ul>
+					<code>
+						spawn(fn ->
+							spawn_link(fn ->
+								Process.sleep(3000)
+								IO.puts("Process #2 finished.")
+							end)
+
+							raise("Process #1 raised an error.")
+						end)
+					</code>
+				</section>
+
+				<!-- Trraps -->
+				<section>
+					<h2> Traps </h2>
+					<ul>
+						<li> Process can trap exits of the child process. </li>
+						<li> Trapped exits are pushed to the process mailbox. </li>
+					</ul>
+
+					<code>
+						
+						Process.flag(:trap_exit, true)
+					</code>
+				</section>
+
+				<!-- Trraps -->
+				<section>
+					<h2> Monitors </h2>
+					<ul>
+						<li> Unidirectional process linking. </li>
+						<li> The observer process won't crash - the message about the exit is pushed to the mailbox. </li>
+					</ul>
+				</section>
+
 				<!-- Supervisors. -->
 				<section>
 					<h2> Supervisors </h2>
-					<blockquote style="width: 100%; padding: 0.5em 1em; border-radius: 6px;"> "Have you tried turning it off and on again?" </blockquote>
+					<blockquote style="width: 100%; padding: 0.5em 1em; border-radius: 6px;">
+						"A once in a billion bug will show up every 3 hours in a system doing 100,000 requests per second." 
+					</blockquote>
 					<ul>
 						<li>Monitors child processes - <b>workers</b> and other <b>supervisors</b>.</li>
+						<li> If the process terminates, supervisor will perform corrective actions (e.g. restart). </li>
+						<li> Uses links, monitors and exit traps. </li>
 						<li>Applies restart strategy to roll back the system to the <b>stable state</b>. </li>
-						<li>"A once in a billion bug will show up every 3 hours in a system doing 100,000 requests per second." </li>
+					</ul>
+				</section>
+
+				<section>
+					<h2> Supervisors example </h2>
+					<pre class="r-stretch">
+						<code data-line-numbers class="hljs language-elixir" data-trim>
+						> Supervisor.start_link([Todo.Server], strategy: :one_for_one)
+						# "Starting TODO server."
+
+						> server_pid = Process.whereis(Todo.Server)
+						# "PID<0.159.0>"
+
+						> Process.exit(server_pid, :kill)
+						# "true"
+						# "Starting TODO server."
+
+						> server_pid = Process.whereis(Todo.Server)
+						# "PID<0.164.0>"
+
+						> Process.exit(server_pid, :kill)
+						# "true"
+  				# "Starting TODO server."
+					</code>
+					</pre>
+				</section>
+
+				<section>
+					<h2> Via tuples </h2>
+					<ul>
+						<li> Supervisors need a way to discover processes. </li>
+						<li> The problem: process PIDs are short lived. </li>
+					</ul>
+				</section>
+
+				<!-- Child spec. -->
+				<section>
+					<h2> Children specifications </h2>
+					<ul>
+						<li> ... </li>
+					</ul>
+				</section>
+
+				<!-- Crashing. -->
+				<section>
+					<h2> "Let it crash" </h2>
+					<blockquote style="width: 100%; padding: 0.5em 1em; border-radius: 6px;"> "Have you tried turning it off and on again?" </blockquote>
+					<ul>
+						<li> ... </li>
 					</ul>
 				</section>
 
@@ -177,6 +330,30 @@
 							<small style="text-align: center;">(Source: <a href="https://adoptingerlang.org/docs/development/supervision_trees/">https://adoptingerlang.org/docs/development/supervision_trees/</a>)</small>
 						</div>
 					</div>
+				</section>
+
+				<!-- Child spec. -->
+				<section>
+					<h2> Tasks </h2>
+					<ul>
+						<li> ... </li>
+					</ul>
+				</section>
+
+				<!-- Child spec. -->
+				<section>
+					<h2> Agents </h2>
+					<ul>
+						<li> ... </li>
+					</ul>
+				</section>
+
+				<!-- Child spec. -->
+				<section>
+					<h2> ETS tables </h2>
+					<ul>
+						<li> ... </li>
+					</ul>
 				</section>
 
 				<section>
