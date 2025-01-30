@@ -42,7 +42,6 @@
 					<li> <b>Metaprogramming</b> through macros (for building DSLs). </li>
 					<li> Offers high-level <b>abstractions</b> for implementing concurrency easily. </li>
 					<li> Ad-hoc polymorphism (via protocols). </li>
-					<li> <b>Functions</b> are grouped into modules, where a <b>module</b> is the smallest unit of compilation. </li>
 				</ul>
 			</section>
 
@@ -51,7 +50,7 @@
 				<h3> Concurrency </h3>
 				<ul>
 					<li> Erlang VM runs on a single <b>OS process</b>. </li>
-					<li> The <b>unit of concurrency is an </b> Erlang process. </li>
+					<li> The <b>unit of concurrency</b> is an Erlang process. </li>
 					<li> Processes are <b>lightweight</b> - few μs to create, under a few KB in size. </li>
 					<li> Erlang VM creates <b>schedulers</b> to manage process execution. </li>
 					<li> Schedulers allocate time-slots for each process, usually <b>≤ 1 ms</b>. </li>
@@ -146,7 +145,7 @@
 					<li> An abstraction for implementing <b>server processes</b>. </li>
 					<li> Supports <b>synchronous</b> and <b>asynchronous</b> operations.
 					<li> OTP compatible server process behavior. </li>
-					<li> Allows customizable <b>timeouts</b>- for call requests. </li>
+					<li> Allows customizable <b>timeouts</b> for call requests. </li>
 				</ul>
 			</section>
 
@@ -311,7 +310,7 @@ end)
 			<section>
 				<h2> Monitors </h2>
 				<ul>
-					<li> Creates <b>one-way</b> process link </li>
+					<li> Creates <b>one-way</b> process link. </li>
 					<li> The observer process <b>won't crash</b>. </li>
 					<li> The message about the exit is pushed to the mailbox. </li>
 				</ul>
@@ -412,8 +411,8 @@ end)
 			<section>
 				<h3> Registered processes </h3>
 				<ul>
-					<li> Supervisors need a way to know what process to (re)start, but PIDs are short-lived.  </li>
-					<li> A process can be given a local name (alias) . </li>
+					<li> Supervisors need a way to know what process to (re)start, but PIDs are short-lived. </li>
+					<li> A process can be given a local name (alias). </li>
 					<li> A name must be an atom, and unique within the BEAM instance. </li>
 				</ul>
 			</section>
