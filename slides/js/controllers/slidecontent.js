@@ -14,7 +14,6 @@ export default class SlideContent {
 		this.Reveal = Reveal;
 
 		this.startEmbeddedIframe = this.startEmbeddedIframe.bind( this );
-
 	}
 
 	/**
@@ -202,6 +201,8 @@ export default class SlideContent {
 		// size of its container. This needs to happen after the
 		// slide is visible in order to measure the text.
 		Array.from( scopeElement.querySelectorAll( '.r-fit-text' ) ).forEach( element => {
+			// console.log('Fitty...', this.Reveal.getConfig().height)
+
 			fitty( element, {
 				minSize: 24,
 				maxSize: this.Reveal.getConfig().height * 0.8,
@@ -209,7 +210,7 @@ export default class SlideContent {
 				observeWindow: false
 			} );
 		} );
-
+		
 	}
 
 	/**

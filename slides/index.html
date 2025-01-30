@@ -1,116 +1,109 @@
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title> Concurrent programming with Elixir </title>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<link rel="stylesheet" href="dist/reset.css">
-		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/night.css">
-		<link rel="stylesheet" href="plugin/highlight/an-old-hope.css">
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
-				<!-- Title. -->
-				<section
-					data-background-color="#220e45"
-					data-background-image="/images/elixir.png"
-					data-background-size="30% auto"
-					data-background-position="85% 50%"
-					data-background-opacity="0.25"
-				>
-					<h2 style="max-width: 75%"> Concurrent programming in Elixir </h2>
-					<p> It's <s style="text-decoration-thickness: 3px;">turtles</s> processes all the way down. </p>
-				</section>
+	<title> Concurrent programming with Elixir </title>
 
-				<!-- About Elixir. -->
-				<section>
-					<h2> What is Elixir? </h2>
-					<ul>
-						<li> <b>Dynamic</b>, functional programming language. </li>
-						<li> Aimed at developing large-scale, fault-tolerant systems. </li>
-						<li> Runs on the <b>Erlang VM</b> (BEAM). </li>
-						<li> <b>Functions</b> are grouped into modules. </li>
-						<li> A <b>module</b> is the smallest unit of compilation. </li>
-					</ul>
-				</section>
+	<link rel="stylesheet" href="dist/reset.css">
+	<link rel="stylesheet" href="dist/reveal.css">
+	<link rel="stylesheet" href="dist/theme/night.css">
+	<link rel="stylesheet" href="plugin/highlight/an-old-hope.css">
+</head>
 
-				<!-- Elixir features. -->
-				<section>
-					<h2> Features </h2>
-					<ul>
-						<li> Data immutability, <b>pattern matching</b>, higher order functions. </li>
-						<li> <b>Metaprogramming</b> through macros (for building DSLs). </li>
-						<li> Ad-hoc polymorphism (via protocols). </li>
-						<li> Offers high-level <b>abstractions</b> for implementing concurrency easily. </li>
-					</ul>
-				</section>
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<!-- Title. -->
+			<section data-background-color="#220e45" data-background-image="/images/elixir.png"
+				data-background-size="30% auto" data-background-position="85% 50%" data-background-opacity="0.25">
+				<h2 style="max-width: 75%"> Concurrent programming in Elixir </h2>
+				<p> It's <s style="text-decoration-thickness: 3px;">turtles</s> processes all the way down. </p>
+			</section>
 
-				<!-- Concurrency 1. -->
-				<section>
-					<h3> Concurrency </h3>
-					<ul>
-						<li> Erlang VM runs on a single <b>OS process</b>. </li>
-						<li> The <b>unit of concurrency is an </b> Erlang process. </li>
-						<li> Processes are <b>lightweight</b> - few μs to create, under a few KB in size. </li>
-						<li> Erlang VM creates <b>schedulers</b> to manage process execution. </li>
-						<li> Schedulers allocate time-slots for each process, usually <b>≤ 1 ms</b>. </li>
-					</ul>
-				</section>
+			<!-- About Elixir. -->
+			<section>
+				<h2> What is Elixir? </h2>
+				<ul>
+					<li> <b>Dynamic</b>, functional programming language. </li>
+					<li> Aimed at developing large-scale, fault-tolerant systems. </li>
+					<li> Runs on the <b>Erlang VM</b> (BEAM). </li>
+					<li> <b>Functions</b> are grouped into modules. </li>
+					<li> A <b>module</b> is the smallest unit of compilation. </li>
+				</ul>
+			</section>
 
-				<!-- BEAM concurrency 1. -->
-				<section>
-					<h3> Concurrency model </h3>
-					<img style="width: 100%; height: auto;" src="./images/beam.svg">
-				</section>
+			<!-- Elixir features. -->
+			<section>
+				<h2> Features </h2>
+				<ul>
+					<li> Data immutability, <b>pattern matching</b>, higher order functions. </li>
+					<li> <b>Metaprogramming</b> through macros (for building DSLs). </li>
+					<li> Ad-hoc polymorphism (via protocols). </li>
+					<li> Offers high-level <b>abstractions</b> for implementing concurrency easily. </li>
+				</ul>
+			</section>
 
-				<!-- <section>
-					<h3> Why processes? </h3>
-					<ul>
-						<li> Can take advantage of all available CPU resources. </li>
-						<li> Isolated from each other, which localizes the effects of run-time errors. </li>
-					</ul>
-				</section> -->
+			<!-- Concurrency 1. -->
+			<section>
+				<h3> Concurrency </h3>
+				<ul>
+					<li> Erlang VM runs on a single <b>OS process</b>. </li>
+					<li> The <b>unit of concurrency is an </b> Erlang process. </li>
+					<li> Processes are <b>lightweight</b> - few μs to create, under a few KB in size. </li>
+					<li> Erlang VM creates <b>schedulers</b> to manage process execution. </li>
+					<li> Schedulers allocate time-slots for each process, usually <b>≤ 1 ms</b>. </li>
+				</ul>
+			</section>
 
-				<!-- Process fundamentals. -->
-				<section>
-					<h3> Process fundamentals (1/2) </h3>
-					<ul>
-						<li> Processes communicate through <b>asynchronous messages</b>. </li>
-						<li> Processes <b>do not share memory</b> - message data is deep copied. </li>
-						<li> Messages are stored in the <b>"mailbox"</b> of the receiver process and read in FIFO order. </li>
-						<li> Processes are sequantial and consume messages one by one. </li>
-						<li> In theory, single BEAM instance can handle up to <b>134 million</b> concurrent processes. </li>
-					</ul>
-				</section>
+			<!-- BEAM concurrency 1. -->
+			<section>
+				<h3> Concurrency model </h3>
+				<img style="width: 90%; height: auto; margin: 0 auto;" src="./images/beam.svg">
+			</section>
 
-				<section>
-					<h3> Process fundamentals (2/2) </h3>
-					<ul>
-						<li> Garbage collection takes place at a process level. </li>
-						<li> Context switching happens frequently, so whatever th eprocess does, it will not block the entire system. </li>
-					</ul>
-				</section>
+			<!-- Process fundamentals. -->
+			<section>
+				<h3> Process fundamentals (1/2) </h3>
+				<ul>
+					<li> Processes communicate through <b>asynchronous messages</b>. </li>
+					<li> Processes <b>do not share memory</b> - message data is deep copied. </li>
+					<li> Messages are stored in the <b>"mailbox"</b> of the receiver process and read
+						<b>sequentially</b> in
+						FIFO order.
+					</li>
+					<li> In theory, a single BEAM instance can handle up to <b>134 million</b> concurrent processes.
+					</li>
+				</ul>
+			</section>
 
-				<!-- Server process - about. -->
-				<section>
-					<h2> Server process </h2>
-					<ul>
-						<li> Run an infinite loop in a separate process. </li>
-						<li> Maintain the process state through <b>tail call recursion</b>. </li>
-						<li> React to <b>sync</b> and <b>async</b> messages. </li>
-						<li> Send a response back to the caller. </li>
-						<li> Can roll your own, but Elixir offers abstractions such as <b><code>GenServer</code></b>.</li>
-					</ul>
-				</section>
+			<section>
+				<h3> Process fundamentals (2/2) </h3>
+				<ul>
+					<li> GC works at a process level. </li>
+					<li> Context switching happens frequently, so whatever the process does, it will not block the
+						entire system. </li>
+				</ul>
+			</section>
 
-				<!-- Server process - code -->
-				<section class="r-stretch">
-					<h2> Server process (2/2) </h2>
-					<pre class="r-stretch" style="font-size: 13px; min-height: 100%;">
+			<!-- Server process - about. -->
+			<section>
+				<h2> Server process </h2>
+				<ul>
+					<li> Run an infinite loop in a separate process. </li>
+					<li> Hold on to the process state through <b>tail call recursion</b>. </li>
+					<li> React to <b>sync</b> and <b>async</b> messages. </li>
+					<li> Send a response back to the caller. </li>
+					<li> Elixir offers abstractions such as <b><code>GenServer</code></b>.</li>
+				</ul>
+			</section>
+
+			<!-- Server process - code -->
+			<!-- <section class="r-stretch">
+				<h2> Server process (2/2) </h2>
+				<pre class="r-stretch" style="font-size: 13px; min-height: 100%;">
 						<code data-line-numbers class="hljs language-elixir" data-trim>
 							defmodule DatabaseServer do
 								def start, do: spawn(&loop/0)
@@ -146,61 +139,62 @@
 							DatabaseServer.get_result()
 						</code>
 					</pre>
-				</section>
+			</section> -->
 
-				<!-- Registered processes -->
-				 <section>
-					<h2> Registered processes </h2>
-					<ul>
-						<li> A process can be given a local name. </li>
-						<li> A name must be an atom, and unique within the BEAM instance. </li>
-						<li> TODO: Add code example. </li>
-					</ul>
-				 </section>
+			<section>
+				<h2> OTP behaviours </h2>
+				<ul>
+					<li> OTP is a collection of middleware, patterns, libraries, tools, and protocols. </li>
+					<li> <b>Generic code</b> that implements the <b>common pattern</b> (e.g. server process). </li>
+					<li> Accepts the <b>callback module</b> that implements the contract functions. </li>
+					<li> Examples are <code><b>GenServer</b></code>, <code><b>Agent</b></code>,
+						<code><b>Task</b></code>, <code><b>Supervisor</b></code>, <code><b>DynamicSupervisor</b></code>,
+						etc.
+					</li>
+				</ul>
+			</section>
 
-				 <section>
-					<h2> OTP behaviours </h2>
-					<ul>
-						<li> OTP is a collection of middleware, patterns, libraries, tools, and protocols that are an integral part of Erlang. </li>
-						<li> <b>Generic code</b> that implements the common pattern (e.g. server process). </li>
-						<li> Accepts the <b>callback module</b> needs to implement contract functions </li>
-						<li> Examples are <code><b>GenServer</b></code>, <code><b>Agent</b></code>, <code><b>Task</b></code>, <code><b>Supervisor</b></code>, <code><b>DynamicSupervisor</b></code>, etc.</li>
-					</ul>
-				 </section>
+			<!-- Gen server -->
+			<section>
+				<h2> GenServer </h2>
+				<ul>
+					<li> An abstraction for implementing server processes. </li>
+					<li> Supports sync (call) and async (cast) operations.
+					<li> OTP compatible server process behavior. </li>
+					<li> Customizable timeouts for call requests. </li>
+				</ul>
+			</section>
 
-				 <!-- Gen server -->
-				 <section>
-					<h2> GenServer </h2>
-					<ul>
-						<li> An abstraction for implementing server processes. </li>
-						<li> Supports sync (call) and async (cast) operations.
-						<li> OTP compatible server process behavior. </li>
-						<li> Customizable timeouts for call requests. </li>
-					</ul>
-				 </section>
+			<section>
+				<h2> GenServer example </h2>
+				...
+			</section>
 
-				 <section>
-					<h2> GenServer example </h2>
-					...
-				 </section>
+			<!-- Registered processes -->
+			<section>
+				<h2> Fault tolerance </h2>
+				<ul>
+					<li> Acknowledge the existence of failures. </li>
+					<li> Minimize their impact. </li>
+					<li> Recover without human intervention. </li>
+				</ul>
+			</section>
 
-				<!-- Registered processes -->
-				<section>
-					<h2> Fault tolerance </h2>
-					<ul>
-						<li> ... </li>
-					</ul>
-				</section>
+			<!-- Process links -->
+			<section>
+				<h2> Process links </h2>
+				<ul>
+					<li> A basic crash detection mechanism. </li>
+					<li> Links act like bidirectional communication channels. </li>
+					<li> When a process terminates <b>abnormally</b>, other process terminates as well. </li>
+				</ul>
 
-				<!-- Process links -->
-				<section>
-					<h2> Process links </h2>
-					<ul>
-						<li> A basic crash detection mechanism. </li>
-						<li> Links are like bidirectional comminication channels. </li>
-						<li> When process terminates abnormally, other process terminates as well. </li>
-					</ul>
-					<code>
+			</section>
+
+			<section>
+				<h2> Linking processes </h2>
+				<pre style="min-width: 100%;">
+					<code data-line-numbers="0|1-8,11|7,12|1-8,13|4" class="hljs language-elixir" data-trim style="font-size: 1.2em; line-height: 1.15em; white-space: break-spaces; min-height: fit-content;">
 						spawn(fn ->
 							spawn_link(fn ->
 								Process.sleep(3000)
@@ -209,50 +203,102 @@
 
 							raise("Process #1 raised an error.")
 						end)
+
+						# Output:
+						# #PID<0.111.0>
+						# 19:35:10.902 [error] Process #PID<0.111.0> raised an exception
+						# ** (RuntimeError) Process #1 raised an error.
 					</code>
-				</section>
+				</pre>
+			</section>
 
-				<!-- Trraps -->
-				<section>
-					<h2> Traps </h2>
-					<ul>
-						<li> Process can trap exits of the child process. </li>
-						<li> Trapped exits are pushed to the process mailbox. </li>
-					</ul>
+			<!-- Traps -->
+			<section>
+				<h2> Traps </h2>
+				<ul>
+					<li>Usually we don't want linked processes to crash.</li>
+					<li>
+						<b>Exit trapping</b> allow the process to detect the crash in order to perform recovery actions.
+					</li>
+					<li> Trapped exit signals are pushed to the process <b>mailbox</b>. </li>
+				</ul>
+			</section>
 
-					<code>
-						
-						Process.flag(:trap_exit, true)
+			<!-- <code>
+			</code> -->
+
+			<section>
+				<h2> Enabling traps </h2>
+				<pre style="min-width: 100%;">
+					<code data-line-numbers class="hljs language-elixir" data-trim style="font-size: 1.2em; line-height: 1.15em; white-space: break-spaces; min-height: fit-content;">
+spawn(fn ->
+	Process.flag(:trap_exit, true)
+
+	spawn_link(fn ->
+		raise("Process raised an error.")
+	end)
+
+	receive do
+		msg -> IO.inspect(msg)
+	end
+end)
+
+# Output:
+# {
+# 	 :EXIT,
+#    PID<0.112.0>,
+# 	 { %RuntimeError{message: "Process raised an error."}, [] }
+# }
 					</code>
-				</section>
+				</pre>
+			</section>
 
-				<!-- Trraps -->
-				<section>
-					<h2> Monitors </h2>
-					<ul>
-						<li> Unidirectional process linking. </li>
-						<li> The observer process won't crash - the message about the exit is pushed to the mailbox. </li>
-					</ul>
-				</section>
+			<!-- Trraps -->
+			<section>
+				<h2> Monitors </h2>
+				<ul>
+					<li> Unidirectional process linking. </li>
+					<li> The observer process won't crash - the message about the exit is pushed to the mailbox. </li>
+				</ul>
+			</section>
 
-				<!-- Supervisors. -->
-				<section>
-					<h2> Supervisors </h2>
-					<blockquote style="width: 100%; padding: 0.5em 1em; border-radius: 6px;">
-						"A once in a billion bug will show up every 3 hours in a system doing 100,000 requests per second." 
-					</blockquote>
-					<ul>
-						<li>Monitors child processes - <b>workers</b> and other <b>supervisors</b>.</li>
-						<li> If the process terminates, supervisor will perform corrective actions (e.g. restart). </li>
-						<li> Uses links, monitors and exit traps. </li>
-						<li>Applies restart strategy to roll back the system to the <b>stable state</b>. </li>
-					</ul>
-				</section>
+			<section>
+				<h2> Monitor example </h2>
+				<pre style="min-width: 100%;">
+					<code data-line-numbers class="hljs language-elixir" data-trim style="font-size: 1.35em; line-height: 1.15em; white-space: break-spaces; min-height: fit-content;">
+						spawn(fn ->
+							pid = spawn(fn -> Process.sleep(5000) end)
+							Process.monitor(pid)
 
-				<section>
-					<h2> Supervisors example </h2>
-					<pre class="r-stretch">
-						<code data-line-numbers class="hljs language-elixir" data-trim>
+							receive do
+								msg -> IO.inspect(msg)
+							end
+						end)
+
+						# Output:
+						# {:DOWN, #Reference<0.503571520.295436289.45609>, :process, #PID<0.114.0>, :normal}
+					</code>
+				</pre>
+			</section>
+
+			<!-- Supervisors. -->
+			<section>
+				<h2> Supervisors </h2>
+				<blockquote style="width: 100%; padding: 0.5em 1em; border-radius: 6px;">
+					"A once in a billion bug will show up every 3 hours in a system doing 100,000 requests per second."
+				</blockquote>
+				<ul style="font-size: 0.95em;">
+					<li>Monitors child processes - <b>workers</b> and other <b>supervisors</b> - using links, monitors
+						and exit traps.</li>
+					<li> If the process terminates, supervisor will perform corrective actions (e.g. restart). </li>
+					<li>Applies restart strategy to roll back the system to the <b>stable state</b>. </li>
+				</ul>
+			</section>
+
+			<section>
+				<h2> Supervisor example </h2>
+				<pre style="min-width: 100%;">
+					<code data-line-numbers="0|1-2|4-5|7-9|11-12|14-16|0" class="hljs language-elixir" data-trim style="font-size: 1.2em; line-height: 1.15em; white-space: break-spaces; min-height: fit-content;">
 						> Supervisor.start_link([Todo.Server], strategy: :one_for_one)
 						# "Starting TODO server."
 
@@ -270,152 +316,264 @@
 						# "true"
   				# "Starting TODO server."
 					</code>
-					</pre>
-				</section>
+				</pre>
+			</section>
 
-				<section>
-					<h2> Via tuples </h2>
-					<ul>
-						<li> Supervisors need a way to discover processes. </li>
-						<li> The problem: process PIDs are short lived. </li>
-					</ul>
-				</section>
+			<section>
+				<h3> Supervision tree </h3>
+				<img style="width: 100%; height: auto; margin: 0 auto;" src="./images/supervisor-tree.svg">
+			</section>
 
-				<!-- Child spec. -->
-				<section>
-					<h2> Children specifications </h2>
-					<ul>
-						<li> ... </li>
-					</ul>
-				</section>
+			<!-- Registered processes -->
+			<section>
+				<h2> Registered processes </h2>
+				<ul>
+					<li> A process can be given a local name. </li>
+					<li> A name must be an atom, and unique within the BEAM instance. </li>
+					<li> TODO: Add code example. </li>
+				</ul>
+			</section>
 
-				<!-- Crashing. -->
-				<section>
-					<h2> "Let it crash" </h2>
-					<blockquote style="width: 100%; padding: 0.5em 1em; border-radius: 6px;"> "Have you tried turning it off and on again?" </blockquote>
-					<ul>
-						<li> ... </li>
-					</ul>
-				</section>
+			<section>
+				<h2> Via tuples </h2>
+				<ul>
+					<li> Supervisors need a way to discover processes. </li>
+					<li> The problem: process PIDs are short lived. </li>
+				</ul>
+			</section>
 
-				<!-- Supervisor - restart policy. -->
-				<section>
-					<h2> Restart strategy (1/2) </h2>
-					<div class="flex-col-inner">
-						<div>
-							<img src="./images/restart_policy.png" style="width: 100%; height: auto; border-radius: 0.5em;">
-							<small>(Source: <a href="https://adoptingerlang.org/docs/development/supervision_trees/">https://adoptingerlang.org/docs/development/supervision_trees/</a>)</small>
-						</div>
+			<!-- Child spec. -->
+			<section>
+				<h2> Children specifications </h2>
+				<ul>
+					<li> ... </li>
+				</ul>
+			</section>
+
+			<!-- Crashing. -->
+			<section>
+				<h2> "Let <s>everything</s> it crash" </h2>
+				<blockquote style="width: 100%; padding: 0.5em 1em; border-radius: 6px;"> "Have you tried turning it off
+					and on again?" </blockquote>
+				<ul>
+					<li> Critical system processes shouldn't crash. </li>
+					<li> When error can be predicted, it should be handled in a worker process. </li>
+				</ul>
+			</section>
+
+			<!-- Supervisor - restart policy. -->
+			<section>
+				<h2> Restart strategy (1/2) </h2>
+				<div class="flex-col-inner">
+					<div>
+						<img src="./images/restart_policy.png" style="width: 100%; height: auto; border-radius: 0.5em;">
+						<small>(Source: <a
+								href="https://adoptingerlang.org/docs/development/supervision_trees/">https://adoptingerlang.org/docs/development/supervision_trees/</a>)</small>
 					</div>
-				</section>
+				</div>
+			</section>
 
-				<section>
-					<h2> Restart strategy (2/2) </h2>
-					<blockquote style="width: 100%; padding: 0.5em 1em; border-radius: 6px;">
-						"...the supervisor just gives up on your code, shuts it down then kills itself to never return (that's how bad it is)."
-						<p style="color: #909090">&mdash;Learn You Some Erlang, <cite>Supervisors</cite></p>
-					</blockquote>
-					<ul>
-						<li> Processes can be permanent, temporary, and transient. </li>
-						<li> Only a predefined number of restarts are allowed in a time frame. </li>
-					</ul>
-				</section>
+			<section>
+				<h2> Restart strategy (2/2) </h2>
+				<blockquote style="width: 100%; padding: 0.5em 1em; border-radius: 6px;">
+					"...the supervisor just gives up on your code, shuts it down then kills itself to never return
+					(that's how bad it is)."
+					<p style="color: #909090">&mdash;Learn You Some Erlang, <cite>Supervisors</cite></p>
+				</blockquote>
+				<ul>
+					<li> Processes can be <b>permanent</b>, <b>temporary</b>, and <b>transient</b>. </li>
+					<li> Maximum restart frequency is 3 restarts 5 seconds. </li>
+				</ul>
+			</section>
 
-				<!-- Supervision trees. -->
-				<section>
-					<h2> Supervision trees </h2>
-					<div class="flex-col-inner">
-						<div>
-							<img style="width: 100%; height: auto; border-radius: 0.5em;" src="./images/suptree.png">
-							<small style="text-align: center;">(Source: <a href="https://adoptingerlang.org/docs/development/supervision_trees/">https://adoptingerlang.org/docs/development/supervision_trees/</a>)</small>
-						</div>
-					</div>
-				</section>
+			<!-- Child spec. -->
+			<section>
+				<h2> Tasks </h2>
+				<ul>
+					<li> For running independent jobs concurrently. </li>
+					<li> There are <b>awaited</b> and <b>non-awaited</b> tasks.</li>
+					<li> Often does not communicate with other processes. </li>
+			</section>
 
-				<!-- Child spec. -->
-				<section>
-					<h2> Tasks </h2>
-					<ul>
-						<li> ... </li>
-					</ul>
-				</section>
+			<section>
+				<h2> Awaited tasks </h2>
+				<pre style="min-width: 100%;">
+					<code data-line-numbers class="hljs language-elixir" data-trim style="font-size: 1.5em; line-height: 1.15em; white-space: break-spaces; min-height: fit-content;">
+						job = 
+							fn ->
+								Process.sleep(2000)
+								IO.puts("Task #1 finished.")
+								:result
+							end
+						
+						task = Task.async(job)
+						Task.await(task)
+					</code>
+				</pre>
+			</section>
 
-				<!-- Child spec. -->
-				<section>
-					<h2> Agents </h2>
-					<ul>
-						<li> ... </li>
-					</ul>
-				</section>
+			<section>
+				<h2> Non-awaitable tasks </h2>
+				<pre style="min-width: 100%;">
+					<code data-line-numbers class="hljs language-elixir" data-trim style="font-size: 1em; line-height: 1.15em; white-space: break-spaces; min-height: fit-content;">
+						defmodule System.Metrics do
+							use Task
+							
+							def start_link(_arg), do: Task.start_link(&loop/0)
+							
+							defp loop() do
+								Process.sleep(:timer.seconds(10))
+								IO.inspect(collect_metrics())
+								loop()
+							end
 
-				<!-- Child spec. -->
-				<section>
-					<h2> ETS tables </h2>
-					<ul>
-						<li> ... </li>
-					</ul>
-				</section>
+							defp collect_metrics() do
+								[
+									memory_usage: :erlang.memory(:total),
+									process_count: :erlang.system_info(:process_count)
+								]
+							end
+						end
+					</code>
+				</pre>
+			</section>
 
-				<section>
-					<h2> Summary </h2>
-					<ul>
-						<li> ... </li>
-					</ul>
-				</section>
+			<!-- Child spec. -->
+			<section>
+				<h2> Agents </h2>
+				<ul>
+					<li> A simplified alternative to GenServer. </li>
+					<li> Does not terminate when the task is finished.</li>
+					<li> When process termination flow and plain message passing is not needed. </li>
+					<li> State is manipulated by passing lambdas. </li>
+				</ul>
+			</section>
 
-				<section style="height: 100%;">
-					<div style="display: flex !important; justify-content: center; align-items: center; height: 100%;">
-						<h1>Q&A</h1>
-					</div>
-				</section>
-			</div>
+			<section>
+				<h2> Agent example </h2>
+				<pre style="min-width: 100%;">
+					<code data-line-numbers class="hljs language-elixir" data-trim style="font-size: 1.2em; line-height: 1.15em; white-space: break-spaces; min-height: fit-content;">
+						{:ok, pid} = Agent.start_link(
+							fn -> %{name: "Bob", age: 30}
+						end)
+
+						Agent.get(
+							pid,
+							fn state -> state.name end
+						)
+
+						Agent.update(
+							pid,
+							fn state -> %{state | age: state.age + 1} end
+						)
+					</code>
+				</pre>
+			</section>
+
+			<!-- ETS -->
+			<section>
+				<h2> ETS tables </h2>
+				<ul>
+					<li> Key-value store, where values can be Erlang terms. </li>
+					<li> Mechanism for efficiently <b>sharing state</b> between processes. </li>
+					<li> Types: set, ordered set, bag, duplicate bag. </li>
+					<li> Permissions: public, private, protected. </li>
+					<li> Alternatives: DETS, Mnesia. </li>
+				</ul>
+			</section>
+
+			<section>
+				<h2> ETS usage </h2>
+				<ul>
+					<li> Storing server-wide shared state. </li>
+					<li> Process data persistence. </li>
+					<li> Counters, shared key value structures, etc. </li>
+				</ul>
+			</section>
+
+			<section style="height: 100%; width: 100%; margin: 0; padding: 0;">
+				<img style="width: 100%; height: auto;" src="./images/server-process-rw.svg">
+			</section>
+
+			<section style="height: 100%; width: 100%; margin: 0; padding: 0;">
+				<img style="width: 100%; height: auto;" src="./images/ets.svg">
+			</section>
+
+			<section>
+				<h2> Summary </h2>
+				<ul>
+					<li> Internally, processes are sequential and process messages one by one. </li>
+					<li> Various OTP compliant abstractions can be used to run concurrent jobs, and those processes can
+						become part of the supervision tree.</li>
+					<li> TODO: Edit. Supevision trees allow easeier reasoning about the system and how the errors
+						propapgate up the tree. </li>
+					<li> Generic server process abstractions implement recursion based state management, sync and async
+						message passing. </li>
+					<li> </li>
+				</ul>
+			</section>
+
+			<section style="height: 100%;">
+				<div style="display: flex !important; justify-content: center; align-items: center; height: 100%;">
+					<h1>Q&A</h1>
+				</div>
+			</section>
 		</div>
+	</div>
 
-		<script src="dist/reveal.js"></script>
-		<script src="dist/socket.io.min.js"></script>
-		<script src="plugin/notes/notes.js"></script>
-		<script src="plugin/markdown/markdown.js"></script>
-		<script src="plugin/highlight/highlight.js"></script>
-		<script>
-			Reveal.initialize({
-				hash: true,
-				center: false,
-				slideNumber: true,
-				transition: 'slide',
-				plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
-			}).then(() => {
-				const socket = io("ws://localhost:9001");
+	<script src="dist/reveal.js"></script>
+	<script src="dist/socket.io.min.js"></script>
+	<script src="plugin/notes/notes.js"></script>
+	<script src="plugin/markdown/markdown.js"></script>
+	<script src="plugin/highlight/highlight.js"></script>
+	<script>
+		Reveal.initialize({
+			hash: true,
+			center: false,
+			slideNumber: true,
+			transition: 'slide',
+			plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
+		}).then(() => {
+			const socket = io("ws://localhost:9001");
 
-				socket.on('connect', () => {
-					socket.emit('register', { role: 'follower' });
-				});
-
-				socket.on('action', ({ action }) => {
-					switch (action) {
-						case 'left':
-							Reveal.left();
-							break;
-						case 'right':
-							Reveal.right();
-							break;
-						case 'up':
-							Reveal.up();
-							break;
-						case 'down':
-							Reveal.down();
-							break;
-						case 'overview-off':
-							Reveal.toggleOverview(false);
-							break;
-						case 'overview-on':
-							Reveal.toggleOverview(true);
-							break;
-						default: {
-							console.log('Unknown action:', action);
-						}
-					}
-				});
+			socket.on('connect', () => {
+				socket.emit('register', { role: 'follower' });
 			});
-		</script>
-	</body>
+
+			socket.on('action', ({ action }) => {
+				switch (action) {
+					case 'left':
+						Reveal.left();
+						break;
+					case 'right':
+						Reveal.right();
+						break;
+					case 'up':
+						Reveal.up();
+						break;
+					case 'down':
+						Reveal.down();
+						break;
+					case 'overview-off':
+						Reveal.toggleOverview(false);
+						break;
+					case 'overview-on':
+						Reveal.toggleOverview(true);
+						break;
+					default: {
+						console.log('Unknown action:', action);
+					}
+				}
+			});
+		});
+
+		Reveal.on('slidechanged', (event) => {
+			const codeTag = event.currentSlide.querySelector('code');
+
+			// if (codeTag && event.previousSlide)
+			// 	window.location.reload();
+		});
+	</script>
+</body>
+
 </html>
